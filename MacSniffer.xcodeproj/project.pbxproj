@@ -6,14 +6,227 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		46555B771482F2CB00B4E526 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46555B761482F2CB00B4E526 /* Cocoa.framework */; };
+		46555B951482F2CC00B4E526 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46555B941482F2CC00B4E526 /* SenTestingKit.framework */; };
+		46555B961482F2CC00B4E526 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46555B761482F2CB00B4E526 /* Cocoa.framework */; };
+		46555B9E1482F2CC00B4E526 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46555B9C1482F2CC00B4E526 /* InfoPlist.strings */; };
+		46555BA11482F2CC00B4E526 /* MacSnifferGUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46555BA01482F2CC00B4E526 /* MacSnifferGUITests.m */; };
+		467D587C148315D400E1C9D3 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 467D587B148315D400E1C9D3 /* libpcap.dylib */; };
+		468DF8501479646900284B7F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 468DF84F1479646900284B7F /* main.c */; };
+		468DF8521479646900284B7F /* MacSniffer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 468DF8511479646900284B7F /* MacSniffer.1 */; };
+		46C75564147C8F970047C493 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C75563147C8F970047C493 /* libpcap.dylib */; };
+		46C7557F147F369F0047C493 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C7557E147F369F0047C493 /* Cocoa.framework */; };
+		46C75581147F37000047C493 /* libobjc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C75580147F37000047C493 /* libobjc.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		46555B971482F2CC00B4E526 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 468DF83F1479640500284B7F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 46555B721482F2CB00B4E526;
+			remoteInfo = MacSnifferGUI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		468DF8491479646800284B7F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				468DF8521479646900284B7F /* MacSniffer.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		46555B731482F2CB00B4E526 /* MacSnifferGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacSnifferGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		46555B761482F2CB00B4E526 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		46555B791482F2CB00B4E526 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		46555B7A1482F2CB00B4E526 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		46555B7B1482F2CB00B4E526 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		46555B931482F2CC00B4E526 /* MacSnifferGUITests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacSnifferGUITests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		46555B941482F2CC00B4E526 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		46555B9B1482F2CC00B4E526 /* MacSnifferGUITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MacSnifferGUITests-Info.plist"; sourceTree = "<group>"; };
+		46555B9D1482F2CC00B4E526 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		46555B9F1482F2CC00B4E526 /* MacSnifferGUITests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacSnifferGUITests.h; sourceTree = "<group>"; };
+		46555BA01482F2CC00B4E526 /* MacSnifferGUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSnifferGUITests.m; sourceTree = "<group>"; };
+		467D587B148315D400E1C9D3 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libpcap.dylib; sourceTree = DEVELOPER_DIR; };
+		468DF8461479641900284B7F /* simplesniffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = simplesniffer.c; path = ../../../Documents/CS6963/MacSniffer/simplesniffer.c; sourceTree = "<group>"; };
+		468DF84B1479646800284B7F /* MacSniffer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = MacSniffer; sourceTree = BUILT_PRODUCTS_DIR; };
+		468DF84F1479646900284B7F /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		468DF8511479646900284B7F /* MacSniffer.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = MacSniffer.1; sourceTree = "<group>"; };
+		46C75563147C8F970047C493 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = SDKs/MacOSX10.7.sdk/usr/local/lib/libpcap.dylib; sourceTree = DEVELOPER_DIR; };
+		46C7557E147F369F0047C493 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		46C75580147F37000047C493 /* libobjc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libobjc.dylib; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		46555B701482F2CB00B4E526 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				467D587C148315D400E1C9D3 /* libpcap.dylib in Frameworks */,
+				46555B771482F2CB00B4E526 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46555B8F1482F2CC00B4E526 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46555B951482F2CC00B4E526 /* SenTestingKit.framework in Frameworks */,
+				46555B961482F2CC00B4E526 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		468DF8481479646800284B7F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46C75581147F37000047C493 /* libobjc.dylib in Frameworks */,
+				46C7557F147F369F0047C493 /* Cocoa.framework in Frameworks */,
+				46C75564147C8F970047C493 /* libpcap.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
+		46555B751482F2CB00B4E526 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				46555B761482F2CB00B4E526 /* Cocoa.framework */,
+				46555B941482F2CC00B4E526 /* SenTestingKit.framework */,
+				46555B781482F2CB00B4E526 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		46555B781482F2CB00B4E526 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				46555B791482F2CB00B4E526 /* AppKit.framework */,
+				46555B7A1482F2CB00B4E526 /* CoreData.framework */,
+				46555B7B1482F2CB00B4E526 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		46555B991482F2CC00B4E526 /* MacSnifferGUITests */ = {
+			isa = PBXGroup;
+			children = (
+				46555B9F1482F2CC00B4E526 /* MacSnifferGUITests.h */,
+				46555BA01482F2CC00B4E526 /* MacSnifferGUITests.m */,
+				46555B9A1482F2CC00B4E526 /* Supporting Files */,
+			);
+			path = MacSnifferGUITests;
+			sourceTree = "<group>";
+		};
+		46555B9A1482F2CC00B4E526 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				46555B9B1482F2CC00B4E526 /* MacSnifferGUITests-Info.plist */,
+				46555B9C1482F2CC00B4E526 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		468DF83D1479640500284B7F = {
 			isa = PBXGroup;
 			children = (
+				467D587B148315D400E1C9D3 /* libpcap.dylib */,
+				46C75580147F37000047C493 /* libobjc.dylib */,
+				46C7557E147F369F0047C493 /* Cocoa.framework */,
+				46C75563147C8F970047C493 /* libpcap.dylib */,
+				468DF8461479641900284B7F /* simplesniffer.c */,
+				468DF84E1479646900284B7F /* MacSniffer */,
+				46555B991482F2CC00B4E526 /* MacSnifferGUITests */,
+				46555B751482F2CB00B4E526 /* Frameworks */,
+				468DF84C1479646800284B7F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
+		468DF84C1479646800284B7F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				468DF84B1479646800284B7F /* MacSniffer */,
+				46555B731482F2CB00B4E526 /* MacSnifferGUI.app */,
+				46555B931482F2CC00B4E526 /* MacSnifferGUITests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		468DF84E1479646900284B7F /* MacSniffer */ = {
+			isa = PBXGroup;
+			children = (
+				468DF84F1479646900284B7F /* main.c */,
+				468DF8511479646900284B7F /* MacSniffer.1 */,
+			);
+			path = MacSniffer;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		46555B721482F2CB00B4E526 /* MacSnifferGUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 46555BA61482F2CC00B4E526 /* Build configuration list for PBXNativeTarget "MacSnifferGUI" */;
+			buildPhases = (
+				46555B6F1482F2CB00B4E526 /* Sources */,
+				46555B701482F2CB00B4E526 /* Frameworks */,
+				46555B711482F2CB00B4E526 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacSnifferGUI;
+			productName = MacSnifferGUI;
+			productReference = 46555B731482F2CB00B4E526 /* MacSnifferGUI.app */;
+			productType = "com.apple.product-type.application";
+		};
+		46555B921482F2CC00B4E526 /* MacSnifferGUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 46555BA71482F2CC00B4E526 /* Build configuration list for PBXNativeTarget "MacSnifferGUITests" */;
+			buildPhases = (
+				46555B8E1482F2CC00B4E526 /* Sources */,
+				46555B8F1482F2CC00B4E526 /* Frameworks */,
+				46555B901482F2CC00B4E526 /* Resources */,
+				46555B911482F2CC00B4E526 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				46555B981482F2CC00B4E526 /* PBXTargetDependency */,
+			);
+			name = MacSnifferGUITests;
+			productName = MacSnifferGUITests;
+			productReference = 46555B931482F2CC00B4E526 /* MacSnifferGUITests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		468DF84A1479646800284B7F /* MacSniffer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 468DF8531479646900284B7F /* Build configuration list for PBXNativeTarget "MacSniffer" */;
+			buildPhases = (
+				468DF8471479646800284B7F /* Sources */,
+				468DF8481479646800284B7F /* Frameworks */,
+				468DF8491479646800284B7F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacSniffer;
+			productName = MacSniffer;
+			productReference = 468DF84B1479646800284B7F /* MacSniffer */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		468DF83F1479640500284B7F /* Project object */ = {
@@ -30,34 +243,325 @@
 				en,
 			);
 			mainGroup = 468DF83D1479640500284B7F;
+			productRefGroup = 468DF84C1479646800284B7F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				468DF84A1479646800284B7F /* MacSniffer */,
+				46555B721482F2CB00B4E526 /* MacSnifferGUI */,
+				46555B921482F2CC00B4E526 /* MacSnifferGUITests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		46555B711482F2CB00B4E526 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46555B901482F2CC00B4E526 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46555B9E1482F2CC00B4E526 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		46555B911482F2CC00B4E526 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		46555B6F1482F2CB00B4E526 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46555B8E1482F2CC00B4E526 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46555BA11482F2CC00B4E526 /* MacSnifferGUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		468DF8471479646800284B7F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				468DF8501479646900284B7F /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		46555B981482F2CC00B4E526 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 46555B721482F2CB00B4E526 /* MacSnifferGUI */;
+			targetProxy = 46555B971482F2CC00B4E526 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		46555B9C1482F2CC00B4E526 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				46555B9D1482F2CC00B4E526 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		46555BA21482F2CC00B4E526 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MacSnifferGUI/MacSnifferGUI-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "MacSnifferGUI/MacSnifferGUI-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		46555BA31482F2CC00B4E526 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MacSnifferGUI/MacSnifferGUI-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "MacSnifferGUI/MacSnifferGUI-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		46555BA41482F2CC00B4E526 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MacSnifferGUI.app/Contents/MacOS/MacSnifferGUI";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MacSnifferGUI/MacSnifferGUI-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "MacSnifferGUITests/MacSnifferGUITests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		46555BA51482F2CC00B4E526 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MacSnifferGUI.app/Contents/MacOS/MacSnifferGUI";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MacSnifferGUI/MacSnifferGUI-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "MacSnifferGUITests/MacSnifferGUITests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 		468DF8441479640600284B7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				New_Setting = "";
 			};
 			name = Debug;
 		};
 		468DF8451479640600284B7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				New_Setting = "";
+			};
+			name = Release;
+		};
+		468DF8541479646900284B7F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Documents/CS6963/MacSniffer/libpcap\"",
+					"\"$(SRCROOT)/MacSniffer/libpcap\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		468DF8551479646900284B7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Documents/CS6963/MacSniffer/libpcap\"",
+					"\"$(SRCROOT)/MacSniffer/libpcap\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		46555BA61482F2CC00B4E526 /* Build configuration list for PBXNativeTarget "MacSnifferGUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46555BA21482F2CC00B4E526 /* Debug */,
+				46555BA31482F2CC00B4E526 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		46555BA71482F2CC00B4E526 /* Build configuration list for PBXNativeTarget "MacSnifferGUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46555BA41482F2CC00B4E526 /* Debug */,
+				46555BA51482F2CC00B4E526 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		468DF8421479640500284B7F /* Build configuration list for PBXProject "MacSniffer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				468DF8441479640600284B7F /* Debug */,
 				468DF8451479640600284B7F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		468DF8531479646900284B7F /* Build configuration list for PBXNativeTarget "MacSniffer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				468DF8541479646900284B7F /* Debug */,
+				468DF8551479646900284B7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
