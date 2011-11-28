@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'MacSnifferGUI' target in the 'MacSnifferGUI' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
