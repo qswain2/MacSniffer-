@@ -20,8 +20,9 @@
     int promiscuousMode;
     int monitorMode;
     const u_char* packet;
+    int count;
 }
-
++ (PcapSniffer*) pcapSniffer;
 -(pcap_t* ) handle;
 -(void) setHandle:(pcap_t*) hdl;
 -(NSString*) device;
@@ -30,7 +31,7 @@
 -(NSString*) filterString;
 -(void) setFilterString:(NSString*) filter;
 -(void) setFiltertoCString:(char*)filterCString;
--(int) compileFilter;
+-(struct bpf_program *) compiledFilter;
 -(int) timeout;
 -(void) setTimeout:(int)to;
 -(int) snaplen;
@@ -45,7 +46,8 @@
 -(int) pc_set_timeout;
 -(int) pc_activate_handle;
 -(int) pc_compile;
+-(int) pc_set_filter;
 -(void) pc_dispatch;
-
+-(void) processPacketCallback;
 
 @end

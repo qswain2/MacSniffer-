@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		468D7EEA1485BA7E00899182 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 467D587B148315D400E1C9D3 /* libpcap.dylib */; };
 		468DF8501479646900284B7F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 468DF84F1479646900284B7F /* main.c */; };
 		468DF8521479646900284B7F /* MacSniffer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 468DF8511479646900284B7F /* MacSniffer.1 */; };
-		469D83001484386400C67293 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46555B761482F2CB00B4E526 /* Cocoa.framework */; };
+		469D83001484386400C67293 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46555B761482F2CB00B4E526 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		469D83061484386400C67293 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 469D83041484386400C67293 /* InfoPlist.strings */; };
 		469D83081484386400C67293 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 469D83071484386400C67293 /* main.m */; };
 		469D830C1484386400C67293 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 469D830A1484386400C67293 /* Credits.rtf */; };
@@ -18,7 +19,6 @@
 		469D83151484386500C67293 /* MacSnifferGUI.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 469D83131484386500C67293 /* MacSnifferGUI.xcdatamodeld */; };
 		469D831C1484386500C67293 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46555B941482F2CC00B4E526 /* SenTestingKit.framework */; };
 		469D831D1484386500C67293 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46555B761482F2CB00B4E526 /* Cocoa.framework */; };
-		469D8331148438C900C67293 /* libpcap.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 469D8330148438C900C67293 /* libpcap.A.dylib */; };
 		469D8332148438D700C67293 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 467D587B148315D400E1C9D3 /* libpcap.dylib */; };
 		469D83351484390900C67293 /* PcapSniffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 469D83341484390900C67293 /* PcapSniffer.m */; };
 		46C7557F147F369F0047C493 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C7557E147F369F0047C493 /* Cocoa.framework */; };
@@ -75,8 +75,8 @@
 		469D83141484386500C67293 /* MacSnifferGUI.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MacSnifferGUI.xcdatamodel; sourceTree = "<group>"; };
 		469D831B1484386500C67293 /* MacSnifferGUITests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacSnifferGUITests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		469D8330148438C900C67293 /* libpcap.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.A.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libpcap.A.dylib; sourceTree = DEVELOPER_DIR; };
-		469D83331484390900C67293 /* PcapSniffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PcapSniffer.h; sourceTree = "<group>"; };
-		469D83341484390900C67293 /* PcapSniffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PcapSniffer.m; sourceTree = "<group>"; };
+		469D83331484390900C67293 /* PcapSniffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PcapSniffer.h; path = MacSnifferGUI/PcapSniffer.h; sourceTree = SOURCE_ROOT; };
+		469D83341484390900C67293 /* PcapSniffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PcapSniffer.m; path = MacSnifferGUI/PcapSniffer.m; sourceTree = SOURCE_ROOT; };
 		46C7557E147F369F0047C493 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		46C75580147F37000047C493 /* libobjc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libobjc.dylib; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -86,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				468D7EEA1485BA7E00899182 /* libpcap.dylib in Frameworks */,
 				46C75581147F37000047C493 /* libobjc.dylib in Frameworks */,
 				46C7557F147F369F0047C493 /* Cocoa.framework in Frameworks */,
 			);
@@ -95,9 +96,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				469D8332148438D700C67293 /* libpcap.dylib in Frameworks */,
-				469D8331148438C900C67293 /* libpcap.A.dylib in Frameworks */,
 				469D83001484386400C67293 /* Cocoa.framework in Frameworks */,
+				469D8332148438D700C67293 /* libpcap.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +116,8 @@
 		46555B751482F2CB00B4E526 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				469D8330148438C900C67293 /* libpcap.A.dylib */,
+				467D587B148315D400E1C9D3 /* libpcap.dylib */,
 				46555B761482F2CB00B4E526 /* Cocoa.framework */,
 				46555B941482F2CC00B4E526 /* SenTestingKit.framework */,
 				46555B781482F2CB00B4E526 /* Other Frameworks */,
@@ -155,8 +157,6 @@
 		468DF83D1479640500284B7F = {
 			isa = PBXGroup;
 			children = (
-				469D8330148438C900C67293 /* libpcap.A.dylib */,
-				467D587B148315D400E1C9D3 /* libpcap.dylib */,
 				46C75580147F37000047C493 /* libobjc.dylib */,
 				46C7557E147F369F0047C493 /* Cocoa.framework */,
 				468DF8461479641900284B7F /* simplesniffer.c */,
@@ -182,6 +182,8 @@
 			isa = PBXGroup;
 			children = (
 				468DF84F1479646900284B7F /* main.c */,
+				469D83331484390900C67293 /* PcapSniffer.h */,
+				469D83341484390900C67293 /* PcapSniffer.m */,
 				468DF8511479646900284B7F /* MacSniffer.1 */,
 			);
 			path = MacSniffer;
@@ -195,8 +197,6 @@
 				469D83101484386400C67293 /* MainMenu.xib */,
 				469D83131484386500C67293 /* MacSnifferGUI.xcdatamodeld */,
 				469D83021484386400C67293 /* Supporting Files */,
-				469D83331484390900C67293 /* PcapSniffer.h */,
-				469D83341484390900C67293 /* PcapSniffer.m */,
 			);
 			path = MacSnifferGUI;
 			sourceTree = "<group>";
@@ -627,6 +627,7 @@
 				469D832A1484386500C67293 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		469D832E1484386500C67293 /* Build configuration list for PBXNativeTarget "MacSnifferGUITests" */ = {
 			isa = XCConfigurationList;
@@ -635,6 +636,7 @@
 				469D832C1484386500C67293 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

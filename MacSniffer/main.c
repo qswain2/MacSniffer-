@@ -9,8 +9,8 @@
 
 #include <string.h>
 #include <stdlib.h>
-
-/*#define MAXBYTES2CAPTURE 65535
+#include <pcap.h>
+#define MAXBYTES2CAPTURE 65535
 #define MANAGEMNT 0
 #define ASSOC_REQUEST 0
 #define ASSOC_RESP 1
@@ -45,8 +45,7 @@ struct frame_control
     unsigned int protectedData:1; //Protected Data
     unsigned int order:1; //Order
 };
-*/
-/*
+
 struct wi_frame {
     struct frame_control fc;
     u_int16_t wi_duration;
@@ -64,8 +63,7 @@ struct wi_ssid{
     u_int8_t length;
     u_int8_t SSID[32];
 };
-*/
-/*
+
 struct beacon_frame{
     u_int16_t fc;
     u_int16_t duration;
@@ -90,8 +88,8 @@ struct assoc_req_frame{
     u_int16_t listenInterval;
     struct wi_ssid ssid;
 };
- */
- /*
+ 
+ 
 struct reassoc_req_frame{
     u_int16_t fc;
     u_int16_t duration;
@@ -115,8 +113,8 @@ struct probe_req_frame{
     struct wi_ssid ssid;
      
 };
-   */
-/*
+   
+
 struct probe_response_frame{
     u_int16_t fc;
     u_int16_t duration;
@@ -130,9 +128,9 @@ struct probe_response_frame{
       
 };
 
-void readSSID(struct wi_ssid pkt_ssid  ){
+void readSSID(struct wi_ssid pkt_ssid ){
     
-    if(pkt_ssid.length < 0)
+    if(pkt_ssid.length != 0)
     {
         for(int i =0; i < pkt_ssid.length;i++)
         {
@@ -149,6 +147,7 @@ void readSSID(struct wi_ssid pkt_ssid  ){
         printf("SSID: %s",ssidName);
         
     }
+    else{printf("there is a problem");}
    
 };
 
@@ -158,7 +157,7 @@ void processPacket(u_char *arg, const struct pcap_pkthdr* pkthdr, const u_char* 
     struct ieee80211_radiotap_header *rh =(struct ieee80211_radiotap_header *)packet;
     struct wi_frame *fr= (struct wi_frame *)(packet + rh->it_len);
     u_char *ptr;
-    char* ssid;
+    
     //printf("Frame Type: %d",fr->wi_fC->type);
     printf("Packet count: %d\n", ++(*counter));
     printf("Received Packet Size: %d \n", pkthdr->len);
@@ -184,7 +183,7 @@ void processPacket(u_char *arg, const struct pcap_pkthdr* pkthdr, const u_char* 
             case REASSOC_REQUEST:
                 printf("Reassociation Resquest \n");
                 struct reassoc_req_frame* rar = (struct reassoc_req_frame *) fr;
-                //printf("SSID: %s",readSSID(rar->ssid.SSID, rar->ssid.length));
+                readSSID(rar->ssid);
                 break;
             case REASSOC_RESP:
                 printf("Reassociation Response \n");
@@ -192,7 +191,7 @@ void processPacket(u_char *arg, const struct pcap_pkthdr* pkthdr, const u_char* 
             case PROBE_REQUEST:
                 printf("Probe Request \n");
                 struct probe_req_frame* pr = (struct probe_req_frame *) fr;
-                //printf("SSID: %s",readSSID(pr->ssid.SSID, pr->ssid.length));
+                readSSID(pr->ssid);
 
                 break;
             case PROBE_RESP:
@@ -202,10 +201,7 @@ void processPacket(u_char *arg, const struct pcap_pkthdr* pkthdr, const u_char* 
                 printf("Beacon Frame \n");
                 struct beacon_frame *bf = (struct beacon_frame* )fr;
                 readSSID(bf->ssid);
-                if(ssid != NULL)
-                {
-                    printf("SSID returned: %s", ssid);
-                }
+              
                 int z = 6;
                 ptr = bf->da;
                 printf("Dest Addr:");
@@ -280,55 +276,55 @@ int main(int argc, char** argv)
     else
     {
         
-    descr = pcap_create(device,errbuf);
+        descr = pcap_create(device,errbuf);
     
-    //settings for pcap
-    //Enable monitor mode
+        //settings for pcap
+        //Enable monitor mode
     
-    if(pcap_set_rfmon(descr,1)!=0)
-    {
-        perror("Error setting monitor mode");
-        exit(1);
+        if(pcap_set_rfmon(descr,1)!=0)
+        {
+            perror("Error setting monitor mode");
+            exit(1);
+        }
+        if(pcap_set_promisc(descr,1) !=0)
+        {
+            perror("Error setting promiscuous mode");
+            exit(1);
+        }
+        if (pcap_set_timeout(descr,10000) != 0)
+        {
+            perror("Error setting promiscuous mode");
+            exit(1);
+        }
+    
+        if (pcap_activate(descr)!=0)
+        {
+            perror("Error activating capture handle");
+            exit(1);
+        }
+    
+        dl =pcap_datalink(descr);
+        if(dl != 127)
+        {
+            fprintf (stderr,"Incorrect datalink type: %d",dl);
+            exit(1);
+        }
+    
+        if(pcap_compile(descr,&fp,filter,0,PCAP_NETMASK_UNKNOWN)==-1)
+        {
+            fprintf(stderr,"Error compiling filter\n");
+            exit(1);
+        }
+    
+        if(pcap_setfilter(descr,&fp)==-1)
+        {
+            fprintf(stderr,"Error setting filter\n");
+            exit(1);
+        }
+    
+        pcap_loop(descr,0, processPacket, (u_char *) &count);
+    
+        return 0;
     }
-    if(pcap_set_promisc(descr,1) !=0)
-    {
-        perror("Error setting promiscuous mode");
-        exit(1);
-    }
-    if (pcap_set_timeout(descr,10000) != 0)
-    {
-        perror("Error setting promiscuous mode");
-        exit(1);
-    }
-    
-    if (pcap_activate(descr)!=0)
-    {
-        perror("Error activating capture handle");
-        exit(1);
-    }
-    
-    dl =pcap_datalink(descr);
-    if(dl != 127)
-    {
-        fprintf (stderr,"Incorrect datalink type: %d",dl);
-        exit(1);
-    }
-    
-    if(pcap_compile(descr,&fp,filter,0,PCAP_NETMASK_UNKNOWN)==-1)
-    {
-        fprintf(stderr,"Error compiling filter\n");
-        exit(1);
-    }
-    
-    if(pcap_setfilter(descr,&fp)==-1)
-    {
-        fprintf(stderr,"Error setting filter\n");
-        exit(1);
-    }
-    
-    pcap_dispatch(descr,0, processPacket, (u_char *) &count);
-    
-    return 0;
-    
+    return -1;
 }
-
