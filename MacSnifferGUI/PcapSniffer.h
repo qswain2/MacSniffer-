@@ -22,7 +22,7 @@
     const u_char* packet;
     int count;
 }
-+ (PcapSniffer*) pcapSniffer;
++ (PcapSniffer*)PcapSniffer;
 -(pcap_t* ) handle;
 -(void) setHandle:(pcap_t*) hdl;
 -(NSString*) device;
@@ -48,6 +48,6 @@
 -(int) pc_compile;
 -(int) pc_set_filter;
 -(void) pc_dispatch;
--(void) processPacketCallback;
+-(id) init;
 
 @end

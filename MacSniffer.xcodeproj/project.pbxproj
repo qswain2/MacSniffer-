@@ -58,6 +58,7 @@
 		46555B9D1482F2CC00B4E526 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		46555B9F1482F2CC00B4E526 /* MacSnifferGUITests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacSnifferGUITests.h; sourceTree = "<group>"; };
 		46555BA01482F2CC00B4E526 /* MacSnifferGUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacSnifferGUITests.m; sourceTree = "<group>"; };
+		465EE8901487168E00EC5108 /* IEEE_80211.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IEEE_80211.h; path = MacSnifferGUI/IEEE_80211.h; sourceTree = SOURCE_ROOT; };
 		467D587B148315D400E1C9D3 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libpcap.dylib; sourceTree = DEVELOPER_DIR; };
 		468DF8461479641900284B7F /* simplesniffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = simplesniffer.c; path = ../../../Documents/CS6963/MacSniffer/simplesniffer.c; sourceTree = "<group>"; };
 		468DF84B1479646800284B7F /* MacSniffer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = MacSniffer; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +185,7 @@
 				468DF84F1479646900284B7F /* main.c */,
 				469D83331484390900C67293 /* PcapSniffer.h */,
 				469D83341484390900C67293 /* PcapSniffer.m */,
+				465EE8901487168E00EC5108 /* IEEE_80211.h */,
 				468DF8511479646900284B7F /* MacSniffer.1 */,
 			);
 			path = MacSniffer;

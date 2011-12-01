@@ -7,6 +7,7 @@
 //
 
 #import "PcapSniffer.h"
+#import "IEEE_80211.h"
 
 @implementation PcapSniffer
 
@@ -110,12 +111,27 @@
 
 -(void) pc_dispatch{
     // declare process packet.
-    if(pcap_dispatch(handle, 0, processPacket, &count != 0)
+    if(pcap_dispatch(handle, 0, processPacket,(u_char *) &count)!=0)
        {
            pcap_geterr(handle);
        }
 }
 
+- (id) init {
+    
+    if ( self = [super init] ) { 
+        
+        [self setDevice:@"en1"]; 
+    }
+    
+    return self; 
+}
+
++(PcapSniffer*) pcapSniffer{
+
+    PcapSniffer* newSniffer = [[PcapSniffer alloc]init];
+    return newSniffer;
+}
     
 
 

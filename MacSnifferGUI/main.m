@@ -7,8 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import <PcapSniffer.h>
 int main(int argc, char *argv[])
 {
+    PcapSniffer* ps = [PcapSniffer pcapsniffer];
     return NSApplicationMain(argc, (const char **)argv);
+    
 }

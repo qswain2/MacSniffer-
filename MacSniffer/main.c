@@ -150,7 +150,7 @@ void readSSID(struct wi_ssid pkt_ssid ){
     else{printf("there is a problem");}
    
 };
-
+/*
 void processPacket(u_char *arg, const struct pcap_pkthdr* pkthdr, const u_char* packet){
     
     int tp,stp,i= 0, *counter = (int *) arg;
@@ -253,7 +253,7 @@ void processPacket(u_char *arg, const struct pcap_pkthdr* pkthdr, const u_char* 
     }
     return;
 }
-
+*/
 int main(int argc, char** argv)
 {
     
@@ -322,7 +322,7 @@ int main(int argc, char** argv)
             exit(1);
         }
     
-        pcap_loop(descr,0, processPacket, (u_char *) &count);
+    //    pcap_loop(descr,0, processPacket, (u_char *) &count);
     
         return 0;
     }
