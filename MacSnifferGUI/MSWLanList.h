@@ -11,7 +11,7 @@
 @interface MSWLanList : NSObject{
 }
 @property (retain) NSMutableDictionary* wlanDict;
-@property (retain) NSMutableSet* wlanArray;
+@property (retain) NSMutableArray* wlanArray;
 
 
 -(void)insertWlanBSSID:(NSString*) bssid                                        intoDict:dc;

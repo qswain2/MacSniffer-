@@ -168,7 +168,7 @@ NSString* const CBBSSIDIdentifier =@"bssid";
         
         //NSMutableArray* wlan =[ps.wlanList.wlanDict objectForKey:key];
    
-    NSSet* detectedSet = ps.wlanList.wlanArray;
+    NSSet* detectedSet = [NSSet setWithArray:ps.wlanList.wlanArray];
     wlans = [[detectedSet allObjects] mutableCopy];
     [self.wlantv reloadData];
 }
