@@ -8,7 +8,7 @@
 
 #import "PcapSniffer.h"
 #import "IEEE_80211.h"
-
+#import "MSWLanList.m"
 @implementation PcapSniffer
 
 -(pcap_t*) handle{
@@ -112,10 +112,17 @@
 
 -(void) pc_dispatch{
     // declare process packet.
-    if(pcap_dispatch(handle, 0, processPacket,(u_char *) &count)!=0)
+    if(pcap_dispatch(handle, 0, processPacket,(__bridge void*) wlanList)!=0)
        {
            pcap_geterr(handle);
        }
+}
+-(MSWLanList*) wlanList{
+    return wlanList;
+}
+-(void) setWlanList:(MSWLanList *)list
+{
+    wlanList = list;
 }
 
 - (id) init {
@@ -126,8 +133,8 @@
         [self setPromiscuousMode:1];
         [self setTimeout:10000];
         [self setMonitorMode:1];
-       
-        
+        MSWLanList* newlist =[MSWLanList msWlanList];
+        [self setWlanList:newlist];
     }
     
     return self; 

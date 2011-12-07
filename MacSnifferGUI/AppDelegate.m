@@ -19,7 +19,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    PcapSniffer* ps = [PcapSniffer pcapSniffer];
+    ps = [PcapSniffer pcapSniffer];
     [ps setDevice:@"en1"];
     NSLog(@"The device name is: %@", ps.device);
     [ps pc_create_handle];
@@ -27,7 +27,7 @@
     [ps pc_set_rfmon];
     [ps pc_set_timeout];
     [ps pc_activate_handle];
-    [ps pc_dispatch];
+    //[ps pc_dispatch];
 }
 
 /**
@@ -153,7 +153,12 @@
         [[NSApplication sharedApplication] presentError:error];
     }
 }
-
+-(IBAction) scanAction:(id) sender{
+    NSLog(@"Begin Scan");
+    [ps pc_dispatch];
+    NSLog(@"End Scan");
+    
+}
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 
     // Save changes in the application's managed object context before the application terminates.

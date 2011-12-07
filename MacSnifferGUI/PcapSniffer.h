@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <pcap.h>
+#import "MSWlanList.h"
 @interface PcapSniffer : NSObject{
 
     pcap_t* handle; 
@@ -21,6 +22,7 @@
     int monitorMode;
     const u_char* packet;
     int count;
+    MSWLanList * wlanList;
 }
 + (PcapSniffer*) pcapSniffer;
 -(pcap_t* ) handle;
@@ -48,6 +50,8 @@
 -(int) pc_compile;
 -(int) pc_set_filter;
 -(void) pc_dispatch;
+-(void) setWlanList:(MSWLanList*) list;
+-(MSWLanList*) wlanList;
 -(id) init;
 
 @end

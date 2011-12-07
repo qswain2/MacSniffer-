@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4644B955148F1C4700354D42 /* MSWLanList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4644B954148F1C4700354D42 /* MSWLanList.m */; };
 		468D7EEA1485BA7E00899182 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 467D587B148315D400E1C9D3 /* libpcap.dylib */; };
 		468DF8501479646900284B7F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 468DF84F1479646900284B7F /* main.c */; };
 		468DF8521479646900284B7F /* MacSniffer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 468DF8511479646900284B7F /* MacSniffer.1 */; };
@@ -49,6 +50,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4644B953148F1C4700354D42 /* MSWLanList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSWLanList.h; sourceTree = "<group>"; };
+		4644B954148F1C4700354D42 /* MSWLanList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSWLanList.m; sourceTree = "<group>"; };
 		46555B761482F2CB00B4E526 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		46555B791482F2CB00B4E526 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		46555B7A1482F2CB00B4E526 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -192,6 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				469D830D1484386400C67293 /* AppDelegate.h */,
+				4644B953148F1C4700354D42 /* MSWLanList.h */,
+				4644B954148F1C4700354D42 /* MSWLanList.m */,
 				469D83331484390900C67293 /* PcapSniffer.h */,
 				469D83341484390900C67293 /* PcapSniffer.m */,
 				465EE8901487168E00EC5108 /* IEEE_80211.h */,
@@ -286,6 +291,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				English,
 			);
 			mainGroup = 468DF83D1479640500284B7F;
 			productRefGroup = 468DF84C1479646800284B7F /* Products */;
@@ -342,6 +348,7 @@
 			files = (
 				468DF8501479646900284B7F /* main.c in Sources */,
 				469D83351484390900C67293 /* PcapSniffer.m in Sources */,
+				4644B955148F1C4700354D42 /* MSWLanList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
