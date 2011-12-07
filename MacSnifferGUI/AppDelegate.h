@@ -13,8 +13,10 @@
     PcapSniffer* ps;
 }
 
+
 @property (assign) IBOutlet NSWindow *window;
-@property (retain) IBOutlet NSTableView *tv;
+@property (retain) IBOutlet NSTableView *wlantv;
+@property (retain) NSMutableArray* wlans;
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -23,5 +25,13 @@
 - (IBAction)saveAction:(id)sender;
 - (IBAction) scanAction:(id) sender;
 - (IBAction) networkFound:(id) sender;
+- (NSInteger) numberOfRowsInTableView:(NSTableView *)table;
+- (id) tableView: (NSTableView *)table objectValueForTableColumn: (NSTableColumn *)column row: (NSInteger)row;
+-(void) tableView: (NSTableView *)table
+            setObjectValue: (id)object
+            forTableColumn: (NSTableColumn *)column
+              row: (NSInteger)row;
+                                                                   
+
 
 @end

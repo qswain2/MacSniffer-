@@ -10,10 +10,14 @@
 #import "IEEE_80211.h"
 #import "PcapSniffer.m"
 
+NSString* const CBSSIDIdentifier = @"ssid";
+NSString* const CBBSSIDIdentifier =@"bssid";
 @implementation AppDelegate
 
+
 @synthesize window = _window;
-@synthesize tv = _tv;
+@synthesize wlantv= _wlantv;
+@synthesize wlans;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize managedObjectContext = __managedObjectContext;
@@ -28,7 +32,8 @@
     [ps pc_set_rfmon];
     [ps pc_set_timeout];
     [ps pc_activate_handle];
-    //[ps pc_dispatch];
+    
+    
 }
 
 /**
@@ -159,7 +164,35 @@
     [ps pc_dispatch];
     NSLog(@"End Scan");
     
+   
+        
+        //NSMutableArray* wlan =[ps.wlanList.wlanDict objectForKey:key];
+   
+    NSSet* detectedSet = ps.wlanList.wlanArray;
+    wlans = [[detectedSet allObjects] mutableCopy];
+    [self.wlantv reloadData];
 }
+-(IBAction)networkFound:(id)sender{
+    [self.wlantv reloadData];
+}
+- (NSInteger) numberOfRowsInTableView:(NSTableView *)table {
+    return [wlans count];
+}
+-(id) tableView: (NSTableView *)table objectValueForTableColumn: (NSTableColumn *)column
+            row: (NSInteger)row{
+    NSDictionary* wlan = [[self wlans] objectAtIndex: row];
+    NSString* identifier = column.identifier;
+    return [wlan objectForKey:identifier];
+}
+-(void) tableView: (NSTableView *)table
+   setObjectValue: (id)object
+   forTableColumn: (NSTableColumn *)column
+              row: (NSInteger)row;{
+    NSMutableDictionary* wlan = [self.wlans objectAtIndex:row];
+    NSString* identifier = column.identifier;
+    [wlan setObject:object forKey:identifier];
+}
+
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 
     // Save changes in the application's managed object context before the application terminates.

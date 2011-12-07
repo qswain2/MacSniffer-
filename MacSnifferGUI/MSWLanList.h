@@ -10,10 +10,15 @@
 
 @interface MSWLanList : NSObject{
 }
-@property (retain) NSMutableDictionary* wlanDict;   
+@property (retain) NSMutableDictionary* wlanDict;
+@property (retain) NSMutableSet* wlanArray;
 
--(void)insertWlanEntry:(NSString*) bssid
-        withName:(NSString*) ssid;
+
+-(void)insertWlanBSSID:(NSString*) bssid                                        intoDict:dc;
+
+-(void) insertWlanSSID:(NSString *) name
+              intoDict:dc;
+-(void)insertWlanEntry:(NSString*) bssid name:(NSString*) ssid;
 -(id)init;
 + (MSWLanList*) msWlanList;
 @end
