@@ -22,7 +22,7 @@
     const u_char* packet;
     int count;
 }
-+ (PcapSniffer*)PcapSniffer;
++ (PcapSniffer*) pcapSniffer;
 -(pcap_t* ) handle;
 -(void) setHandle:(pcap_t*) hdl;
 -(NSString*) device;

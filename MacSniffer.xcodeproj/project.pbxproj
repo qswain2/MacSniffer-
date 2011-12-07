@@ -117,8 +117,8 @@
 		46555B751482F2CB00B4E526 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				469D8330148438C900C67293 /* libpcap.A.dylib */,
 				467D587B148315D400E1C9D3 /* libpcap.dylib */,
+				469D8330148438C900C67293 /* libpcap.A.dylib */,
 				46555B761482F2CB00B4E526 /* Cocoa.framework */,
 				46555B941482F2CC00B4E526 /* SenTestingKit.framework */,
 				46555B781482F2CB00B4E526 /* Other Frameworks */,
@@ -183,9 +183,6 @@
 			isa = PBXGroup;
 			children = (
 				468DF84F1479646900284B7F /* main.c */,
-				469D83331484390900C67293 /* PcapSniffer.h */,
-				469D83341484390900C67293 /* PcapSniffer.m */,
-				465EE8901487168E00EC5108 /* IEEE_80211.h */,
 				468DF8511479646900284B7F /* MacSniffer.1 */,
 			);
 			path = MacSniffer;
@@ -195,6 +192,9 @@
 			isa = PBXGroup;
 			children = (
 				469D830D1484386400C67293 /* AppDelegate.h */,
+				469D83331484390900C67293 /* PcapSniffer.h */,
+				469D83341484390900C67293 /* PcapSniffer.m */,
+				465EE8901487168E00EC5108 /* IEEE_80211.h */,
 				469D830E1484386400C67293 /* AppDelegate.m */,
 				469D83101484386400C67293 /* MainMenu.xib */,
 				469D83131484386500C67293 /* MacSnifferGUI.xcdatamodeld */,

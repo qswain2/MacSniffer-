@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "IEEE_80211.h"
+#import "PcapSniffer.m"
 
 @implementation AppDelegate
 
@@ -17,7 +19,15 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
+    PcapSniffer* ps = [PcapSniffer pcapSniffer];
+    [ps setDevice:@"en1"];
+    NSLog(@"The device name is: %@", ps.device);
+    [ps pc_create_handle];
+    [ps pc_set_promisc];
+    [ps pc_set_rfmon];
+    [ps pc_set_timeout];
+    [ps pc_activate_handle];
+    [ps pc_dispatch];
 }
 
 /**

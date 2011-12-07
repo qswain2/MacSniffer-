@@ -18,6 +18,7 @@
     handle = hdl;
 }
 -(NSString*) device{
+    
     return device;
 }
 -(void) setDevice:(NSString*) devName{
@@ -120,8 +121,13 @@
 - (id) init {
     
     if ( self = [super init] ) { 
+        NSString* devName = @"en1";
+        [self setDevice:devName]; 
+        [self setPromiscuousMode:1];
+        [self setTimeout:10000];
+        [self setMonitorMode:1];
+       
         
-        [self setDevice:@"en1"]; 
     }
     
     return self; 
