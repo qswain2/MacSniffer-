@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		461C28EA14900E1800551C17 /* CoreWLAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 461C28E914900E1800551C17 /* CoreWLAN.framework */; };
+		461C28ED14900E4B00551C17 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 461C28EC14900E4B00551C17 /* SecurityInterface.framework */; };
 		4644B955148F1C4700354D42 /* MSWLanList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4644B954148F1C4700354D42 /* MSWLanList.m */; };
 		468D7EEA1485BA7E00899182 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 467D587B148315D400E1C9D3 /* libpcap.dylib */; };
 		468DF8501479646900284B7F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 468DF84F1479646900284B7F /* main.c */; };
@@ -50,6 +52,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		461C28E914900E1800551C17 /* CoreWLAN.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreWLAN.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/CoreWLAN.framework; sourceTree = DEVELOPER_DIR; };
+		461C28EC14900E4B00551C17 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/SecurityInterface.framework; sourceTree = DEVELOPER_DIR; };
 		4644B953148F1C4700354D42 /* MSWLanList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSWLanList.h; sourceTree = "<group>"; };
 		4644B954148F1C4700354D42 /* MSWLanList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSWLanList.m; sourceTree = "<group>"; };
 		46555B761482F2CB00B4E526 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -100,6 +104,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				461C28ED14900E4B00551C17 /* SecurityInterface.framework in Frameworks */,
+				461C28EA14900E1800551C17 /* CoreWLAN.framework in Frameworks */,
 				469D83001484386400C67293 /* Cocoa.framework in Frameworks */,
 				469D8332148438D700C67293 /* libpcap.dylib in Frameworks */,
 			);
@@ -120,6 +126,8 @@
 		46555B751482F2CB00B4E526 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				461C28EC14900E4B00551C17 /* SecurityInterface.framework */,
+				461C28E914900E1800551C17 /* CoreWLAN.framework */,
 				467D587B148315D400E1C9D3 /* libpcap.dylib */,
 				469D8330148438C900C67293 /* libpcap.A.dylib */,
 				46555B761482F2CB00B4E526 /* Cocoa.framework */,

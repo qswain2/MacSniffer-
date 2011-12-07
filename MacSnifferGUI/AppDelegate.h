@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PcapSniffer.h"
-
+@class  CWInterface, CWConfiguration, CWNetwork, SFAuthorizationView;
 @interface AppDelegate : NSObject <NSApplicationDelegate>{
     PcapSniffer* ps;
 }
@@ -24,7 +24,7 @@
 
 - (IBAction)saveAction:(id)sender;
 - (IBAction) scanAction:(id) sender;
-- (IBAction) networkFound:(id) sender;
+- (IBAction) joinNetworkAction:(id) sender;
 - (NSInteger) numberOfRowsInTableView:(NSTableView *)table;
 - (id) tableView: (NSTableView *)table objectValueForTableColumn: (NSTableColumn *)column row: (NSInteger)row;
 -(void) tableView: (NSTableView *)table

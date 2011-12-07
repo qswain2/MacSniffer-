@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "IEEE_80211.h"
 #import "PcapSniffer.m"
+#import "CoreWLAN/CoreWLAN.h"
+#import "CoreWLAN/CWInterface.h"
 
 NSString* const CBSSIDIdentifier = @"ssid";
 NSString* const CBBSSIDIdentifier =@"bssid";
@@ -165,16 +167,35 @@ NSString* const CBBSSIDIdentifier =@"bssid";
     NSLog(@"End Scan");
     
    
-        
-        //NSMutableArray* wlan =[ps.wlanList.wlanDict objectForKey:key];
-   
     NSSet* detectedSet = [NSSet setWithArray:ps.wlanList.wlanArray];
     wlans = [[detectedSet allObjects] mutableCopy];
     [self.wlantv reloadData];
 }
--(IBAction)networkFound:(id)sender{
-    [self.wlantv reloadData];
+-(IBAction) joinNetworkAction:(id)sender{
+    NSLog(@"Join Button Clicked");
+    //Code to attempt network association
+    // is a network from the list has been selected 
+    if(self.wlantv.selectedRow > -1)
+    {
+        NSError* err = nil;
+        NSInteger selectedIndex = [self.wlantv selectedRow];
+        NSMutableDictionary* wlanInfo= [wlans objectAtIndex:selectedIndex];
+        NSString* itfname = @"en1";
+        CWInterface* itf = [CWInterface interfaceWithName:itfname];
+        NSLog(@"Current interface obj:%@",[itf interfaceName]);
+        CW8021XProfile* wlanProfile = [CW8021XProfile profile];
+        wlanProfile.ssid = [wlanInfo valueForKey:@"ssid"];
+        NSLog(@" BEgin Network Scan for %@",[wlanInfo valueForKey:@"ssid"]);
+        NSSet* networks = [itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err];
+        NSLog(@"Network Scan complete");
+        NSMutableDictionary* params =[NSMutableDictionary dictionaryWithCapacity:0];
+        NSLog(@"Attempt Association");
+        [params setValue:wlanProfile  forKey:kCWAssocKey8021XProfile];
+        
+        
+    }
 }
+
 - (NSInteger) numberOfRowsInTableView:(NSTableView *)table {
     return [wlans count];
 }
