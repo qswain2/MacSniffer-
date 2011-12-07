@@ -13,6 +13,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize tv = _tv;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize managedObjectContext = __managedObjectContext;

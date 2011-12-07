@@ -14,6 +14,7 @@
 }
 
 @property (assign) IBOutlet NSWindow *window;
+@property (retain) IBOutlet NSTableView *tv;
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -21,5 +22,6 @@
 
 - (IBAction)saveAction:(id)sender;
 - (IBAction) scanAction:(id) sender;
+- (IBAction) networkFound:(id) sender;
 
 @end
