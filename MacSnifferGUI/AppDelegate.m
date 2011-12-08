@@ -186,13 +186,19 @@ NSString* const CBBSSIDIdentifier =@"bssid";
         CW8021XProfile* wlanProfile = [CW8021XProfile profile];
         wlanProfile.ssid = [wlanInfo valueForKey:@"ssid"];
         NSLog(@" BEgin Network Scan for %@",[wlanInfo valueForKey:@"ssid"]);
-        NSSet* networks = [itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err];
-        NSLog(@"Network Scan complete");
-        NSMutableDictionary* params =[NSMutableDictionary dictionaryWithCapacity:0];
-        NSLog(@"Attempt Association");
-        [params setValue:wlanProfile  forKey:kCWAssocKey8021XProfile];
-        
-        
+        [itf disassociate];
+        NSSet* networks = [NSSet setWithSet:[itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err]];
+        if(err)
+        {
+            [NSApp presentError:err];
+        }
+        else{
+            NSLog(@"Number of Networks found: %u",networks.count);
+            NSLog(@"Network Scan complete");
+            NSMutableDictionary* params =[NSMutableDictionary dictionaryWithCapacity:0];
+            NSLog(@"Attempt Association");
+        }
+
     }
 }
 
