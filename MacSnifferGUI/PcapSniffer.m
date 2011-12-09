@@ -124,7 +124,10 @@
 {
     wlanList = list;
 }
-
+-(void) pc_close
+{
+    pcap_close(handle);
+}
 - (id) init {
     
     if ( self = [super init] ) { 

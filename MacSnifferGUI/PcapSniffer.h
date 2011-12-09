@@ -39,7 +39,7 @@
 -(int) snaplen;
 -(void) setSnaplen:(int)sl;
 -(int) promiscuousMode;
--(void) setPromiscuousMode;
+-(void) setPromiscuousMode:(int)pm;
 -(int) monitorMode;
 -(void) setMonitorMode:(int) rfmon;
 -(int) pc_create_handle;
@@ -51,6 +51,7 @@
 -(int) pc_set_filter;
 -(void) pc_dispatch;
 -(void) setWlanList:(MSWLanList*) list;
+-(void) pc_close;
 -(MSWLanList*) wlanList;
 -(id) init;
 

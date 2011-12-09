@@ -124,6 +124,9 @@
  u_int16_t capability;
  
  };
+
+// Read int[] and return NSString object for the Mac Address of
+//  the BSSID for a detected WLan
 NSString* readBSSID(u_char* addr){
     
     NSMutableString* bssid=[NSMutableString stringWithString:@""];
@@ -137,18 +140,18 @@ NSString* readBSSID(u_char* addr){
     }while(--z>0);
     printf("\n");
       
-    NSString* bssID= bssid; //=  [NSString stringWithFormat:@"%X:%X:%X:%X:%X:%X",
-                 //fr.wi_add3[0],fr.wi_add3[1],fr.wi_add3[2],fr.wi_add3[3],fr.wi_add3[4],fr.wi_add3[5]];
-    //NSLog(@"BSSID: %@",bssID);
     return bssid;
     
 }
+
+//Read the SSID length and extracts the SSID value from the SSID
+// struct
 NSString* readSSID(struct wi_ssid pkt_ssid ){
     
     if(pkt_ssid.length != 0)
     {
         NSMutableString* wlanID=[NSMutableString stringWithString:@""];
-        NSMutableString* temp;
+        NSMutableString* temp = nil;
         for(int i =0; i < pkt_ssid.length;i++)
         {
             temp =[NSString stringWithFormat:@"%c",(char)pkt_ssid.SSID[i]];
@@ -172,25 +175,27 @@ NSString* readSSID(struct wi_ssid pkt_ssid ){
 };
 
 void processPacket(void *arg, const struct pcap_pkthdr* pkthdr, const u_char* packet){
-    
-    int tp,stp,i= 0;
+    // ints for the type and subtype calue of the packets
+    int tp,stp;
     MSWLanList* dict = (__bridge MSWLanList*)arg;
     struct ieee80211_radiotap_header *rh =(struct ieee80211_radiotap_header *)packet;
     struct wi_frame *fr= (struct wi_frame *)(packet + rh->it_len);
+    // String objects for the information we want to extract from
+    //packet scanning
     NSString* name;
     NSString* bssid;
     u_char *ptr;
-    //printf("Frame Type: %d",fr->wi_fC->type);
     
-    //printf("Received Packet Size: %d \n", pkthdr->len);
+    // get the type and subtype values
     tp = fr->fc.type;
     stp =fr->fc.subtype;
    
+    // Handle managementpackets and subtypes 
     if (tp == 0)
     {
         printf("Management packet \n");
         switch(stp){
-                
+            // handle subtypes and extract data     
             case ASSOC_REQUEST:
                 printf("Association Request \n");
                 struct assoc_req_frame* ar = (struct assoc_req_frame *) (packet + rh->it_len);
@@ -245,6 +250,7 @@ void processPacket(void *arg, const struct pcap_pkthdr* pkthdr, const u_char* pa
                 {
                     [dict insertWlanEntry:bssid name:name];
                 }
+                /* Original code for printing out the mac addresses moved into function readBSSID
                 int z = 6;
                    
                 ptr = bf->da;
@@ -269,39 +275,22 @@ void processPacket(void *arg, const struct pcap_pkthdr* pkthdr, const u_char* pa
                     printf("%s%02X",(z==6)?" ":":",*ptr++);
                 }while(--z>0);
                 printf("\n");
-                
+                */
                 break; 
             default:
                 printf("Can't read subtype \n");
+                
+            
         }
                 
              
                
         
     }
-    printf("\n");
-  /*  
-    for (i = 0;i<pkthdr->len;i++)
-    {
-        
-        if(isprint(packet[i +rh->it_len]))
-        {
-            printf("%c",packet[i + rh->it_len]);	
-        }
-        
-        else{printf(".");}
-        
-        
-        
-        //print newline after each section of the packet
-        if((i%16 ==0 && i!=0) ||(i==pkthdr->len-1))
-        {
-            printf("\n");
-	    }
-        
-    }
-   */
-    return;
+   /*
+     Code to handle other types of packets Control or Data later
+    */
+     return;
 }
 
 #endif

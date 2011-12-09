@@ -27,13 +27,7 @@ NSString* const CBBSSIDIdentifier =@"bssid";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     ps = [PcapSniffer pcapSniffer];
-    [ps setDevice:@"en1"];
-    NSLog(@"The device name is: %@", ps.device);
-    [ps pc_create_handle];
-    [ps pc_set_promisc];
-    [ps pc_set_rfmon];
-    [ps pc_set_timeout];
-    [ps pc_activate_handle];
+   
     
     
 }
@@ -162,15 +156,33 @@ NSString* const CBBSSIDIdentifier =@"bssid";
     }
 }
 -(IBAction) scanAction:(id) sender{
+    
+
+    NSLog(@"Configuring capture device");
+    //Set device and configure capture handle
+    [ps setDevice:@"en1"];
+    NSLog(@"The device name is: %@", ps.device);
+    [ps pc_create_handle];
+    [ps pc_set_promisc];
+    [ps pc_set_rfmon];
+    [ps pc_set_timeout];
+    [ps pc_activate_handle];
+    
+    //Begins actual scan for packets
     NSLog(@"Begin Scan");
     [ps pc_dispatch];
     NSLog(@"End Scan");
+    
+    // Close capture handle  and release resources 
+    [ps pc_close];
     
    
     NSSet* detectedSet = [NSSet setWithArray:ps.wlanList.wlanArray];
     wlans = [[detectedSet allObjects] mutableCopy];
     [self.wlantv reloadData];
 }
+
+//Action for getting interface and ascoiating to a selected network using CoreWirelessLan Framework
 -(IBAction) joinNetworkAction:(id)sender{
     NSLog(@"Join Button Clicked");
     //Code to attempt network association
@@ -190,15 +202,19 @@ NSString* const CBBSSIDIdentifier =@"bssid";
         NSSet* networks = [NSSet setWithSet:[itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err]];
         if(err)
         {
+            NSLog(@"Error: %@",[err localizedDescription]);
             [NSApp presentError:err];
         }
         else{
-            NSLog(@"Number of Networks found: %u",networks.count);
+            NSLog(@"Number of Networks found: %lu",networks.count);
             NSLog(@"Network Scan complete");
             NSMutableDictionary* params =[NSMutableDictionary dictionaryWithCapacity:0];
             NSLog(@"Attempt Association");
+           /*
+            Associate to network code 
+            
+            */
         }
-
     }
 }
 

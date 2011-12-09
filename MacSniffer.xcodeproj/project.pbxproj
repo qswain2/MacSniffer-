@@ -68,7 +68,7 @@
 		465EE8901487168E00EC5108 /* IEEE_80211.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IEEE_80211.h; path = MacSnifferGUI/IEEE_80211.h; sourceTree = SOURCE_ROOT; };
 		467D587B148315D400E1C9D3 /* libpcap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libpcap.dylib; sourceTree = DEVELOPER_DIR; };
 		468DF8461479641900284B7F /* simplesniffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = simplesniffer.c; path = ../../../Documents/CS6963/MacSniffer/simplesniffer.c; sourceTree = "<group>"; };
-		468DF84B1479646800284B7F /* MacSniffer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = MacSniffer; sourceTree = BUILT_PRODUCTS_DIR; };
+		468DF84B1479646800284B7F /* MacSniffer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MacSniffer; sourceTree = BUILT_PRODUCTS_DIR; };
 		468DF84F1479646900284B7F /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		468DF8511479646900284B7F /* MacSniffer.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = MacSniffer.1; sourceTree = "<group>"; };
 		469D82FE1484386400C67293 /* MacSnifferGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacSnifferGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -441,7 +441,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -466,7 +466,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -474,7 +474,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -492,7 +492,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
