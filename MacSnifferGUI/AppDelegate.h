@@ -8,16 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PcapSniffer.h"
+#import "MSServiceBrowser.h"
 @class  CWInterface, CWConfiguration, CWNetwork, SFAuthorizationView;
 @interface AppDelegate : NSObject <NSApplicationDelegate>{
     PcapSniffer* ps;
+    MSServiceBrowser* serviceBrowser;
 }
 
 
 @property (assign) IBOutlet NSWindow *window;
 @property (retain) IBOutlet NSTableView *wlantv;
-@property (retain) NSMutableArray* wlans;
 
+@property (retain) NSMutableArray* wlans;
+@property (readwrite,retain) NSMutableArray* services;
+@property (readwrite,retain) MSServiceBrowser* serviceBrowser;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

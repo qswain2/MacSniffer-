@@ -11,15 +11,19 @@
 #import "PcapSniffer.m"
 #import "CoreWLAN/CoreWLAN.h"
 #import "CoreWLAN/CWInterface.h"
+#import "MSServiceBrowser.m"
 
 NSString* const CBSSIDIdentifier = @"ssid";
 NSString* const CBBSSIDIdentifier =@"bssid";
+NSString* const CBServiceIdentifier = @"ServiceName";
+NSString* const CBTypeIdentifier = @"ServiceType";
 @implementation AppDelegate
 
 
 @synthesize window = _window;
 @synthesize wlantv= _wlantv;
 @synthesize wlans;
+@synthesize services;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize managedObjectContext = __managedObjectContext;
@@ -27,8 +31,7 @@ NSString* const CBBSSIDIdentifier =@"bssid";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     ps = [PcapSniffer pcapSniffer];
-   
-    
+    serviceBrowser = [MSServiceBrowser new];
     
 }
 
@@ -210,10 +213,29 @@ NSString* const CBBSSIDIdentifier =@"bssid";
             NSLog(@"Network Scan complete");
             NSMutableDictionary* params =[NSMutableDictionary dictionaryWithCapacity:0];
             NSLog(@"Attempt Association");
-           /*
-            Associate to network code 
+            if (networks.count > 0){
+                
+                NSEnumerator* netEnum= [networks objectEnumerator];
+                CWNetwork* net = [netEnum nextObject];
+                
+                [itf associateToNetwork:net password:@"" error:&err];
+                if(err)
+                {
+                    NSLog(@"Error: %@",[err localizedDescription]);
+                    [NSApp presentError:err];
+                }
+                
+                else
+                {
+                    NSLog(@"Association Successful");
+                    [serviceBrowser.browser searchForBrowsableDomains];
+                    [serviceBrowser.browser searchForServicesOfType:@"__airport._tcp" inDomain:@"local."];
+                    services  = [NSMutableArray arrayWithArray:serviceBrowser.services];
+                   
+                    NSLog(@"Searched for services");
+                }
+            }
             
-            */
         }
     }
 }
