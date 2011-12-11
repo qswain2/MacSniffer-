@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		461C28EA14900E1800551C17 /* CoreWLAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 461C28E914900E1800551C17 /* CoreWLAN.framework */; };
 		461C28ED14900E4B00551C17 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 461C28EC14900E4B00551C17 /* SecurityInterface.framework */; };
-		46305A551493221E00825389 /* MSServiceBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 46305A541493221E00825389 /* MSServiceBrowser.m */; };
 		4644B955148F1C4700354D42 /* MSWLanList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4644B954148F1C4700354D42 /* MSWLanList.m */; };
 		468D7EEA1485BA7E00899182 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 467D587B148315D400E1C9D3 /* libpcap.dylib */; };
 		468DF8501479646900284B7F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 468DF84F1479646900284B7F /* main.c */; };
@@ -362,7 +361,6 @@
 				468DF8501479646900284B7F /* main.c in Sources */,
 				469D83351484390900C67293 /* PcapSniffer.m in Sources */,
 				4644B955148F1C4700354D42 /* MSWLanList.m in Sources */,
-				46305A551493221E00825389 /* MSServiceBrowser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +551,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "MacSnifferGUI/MacSnifferGUI-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;

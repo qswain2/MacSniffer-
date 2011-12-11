@@ -9,8 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MSServiceBrowser : NSObject <NSNetServiceBrowserDelegate>
+{
+ NSMutableArray* services;
+}
 @property (retain) NSNetServiceBrowser* browser;
-@property (readwrite,retain) NSMutableArray* services;
 @property (readwrite,retain) NSArrayController* servicesArrController;
+ 
+
 +(MSServiceBrowser *)new;
+
 @end

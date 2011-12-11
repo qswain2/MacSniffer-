@@ -18,9 +18,9 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (retain) IBOutlet NSTableView *wlantv;
+@property (retain) IBOutlet NSMutableArray *services;
 
 @property (retain) NSMutableArray* wlans;
-@property (readwrite,retain) NSMutableArray* services;
 @property (readwrite,retain) MSServiceBrowser* serviceBrowser;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

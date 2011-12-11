@@ -24,6 +24,7 @@ NSString* const CBTypeIdentifier = @"ServiceType";
 @synthesize wlantv= _wlantv;
 @synthesize wlans;
 @synthesize services;
+
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize managedObjectContext = __managedObjectContext;
@@ -35,107 +36,6 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     
 }
 
-/**
-    Returns the directory the application uses to store the Core Data store file. This code uses a directory named "MacSnifferGUI" in the user's Library directory.
- */
-- (NSURL *)applicationFilesDirectory {
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSURL *libraryURL = [[fileManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
-    return [libraryURL URLByAppendingPathComponent:@"MacSnifferGUI"];
-}
-
-/**
-    Creates if necessary and returns the managed object model for the application.
- */
-- (NSManagedObjectModel *)managedObjectModel {
-    if (__managedObjectModel) {
-        return __managedObjectModel;
-    }
-	
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"MacSnifferGUI" withExtension:@"momd"];
-    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];    
-    return __managedObjectModel;
-}
-
-/**
-    Returns the persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. (The directory for the store is created, if necessary.)
- */
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (__persistentStoreCoordinator) {
-        return __persistentStoreCoordinator;
-    }
-
-    NSManagedObjectModel *mom = [self managedObjectModel];
-    if (!mom) {
-        NSLog(@"%@:%@ No model to generate a store from", [self class], NSStringFromSelector(_cmd));
-        return nil;
-    }
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSURL *applicationFilesDirectory = [self applicationFilesDirectory];
-    NSError *error = nil;
-    
-    NSDictionary *properties = [applicationFilesDirectory resourceValuesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] error:&error];
-        
-    if (!properties) {
-        BOOL ok = NO;
-        if ([error code] == NSFileReadNoSuchFileError) {
-            ok = [fileManager createDirectoryAtPath:[applicationFilesDirectory path] withIntermediateDirectories:YES attributes:nil error:&error];
-        }
-        if (!ok) {
-            [[NSApplication sharedApplication] presentError:error];
-            return nil;
-        }
-    }
-    else {
-        if ([[properties objectForKey:NSURLIsDirectoryKey] boolValue] != YES) {
-            // Customize and localize this error.
-            NSString *failureDescription = [NSString stringWithFormat:@"Expected a folder to store application data, found a file (%@).", [applicationFilesDirectory path]]; 
-            
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setValue:failureDescription forKey:NSLocalizedDescriptionKey];
-            error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:101 userInfo:dict];
-            
-            [[NSApplication sharedApplication] presentError:error];
-            return nil;
-        }
-    }
-    
-    NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"MacSnifferGUI.storedata"];
-    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
-    if (![coordinator addPersistentStoreWithType:NSXMLStoreType configuration:nil URL:url options:nil error:&error]) {
-        [[NSApplication sharedApplication] presentError:error];
-        return nil;
-    }
-    __persistentStoreCoordinator = coordinator;
-
-    return __persistentStoreCoordinator;
-}
-
-/**
-    Returns the managed object context for the application (which is already
-    bound to the persistent store coordinator for the application.) 
- */
-- (NSManagedObjectContext *)managedObjectContext {
-    if (__managedObjectContext) {
-        return __managedObjectContext;
-    }
-
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (!coordinator) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:@"Failed to initialize the store" forKey:NSLocalizedDescriptionKey];
-        [dict setValue:@"There was an error building up the data file." forKey:NSLocalizedFailureReasonErrorKey];
-        NSError *error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
-        [[NSApplication sharedApplication] presentError:error];
-        return nil;
-    }
-    __managedObjectContext = [[NSManagedObjectContext alloc] init];
-    [__managedObjectContext setPersistentStoreCoordinator:coordinator];
-
-    return __managedObjectContext;
-}
 
 /**
     Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
@@ -179,67 +79,88 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     // Close capture handle  and release resources 
     [ps pc_close];
     
-   
+    //Update the outlet to point at the detectedSet Object
     NSSet* detectedSet = [NSSet setWithArray:ps.wlanList.wlanArray];
     wlans = [[detectedSet allObjects] mutableCopy];
+   
+    //message the tableview to update itself;
     [self.wlantv reloadData];
 }
 
-//Action for getting interface and ascoiating to a selected network using CoreWirelessLan Framework
+//Action for getting interface and associating to a selected network using CoreWirelessLan Framework
 -(IBAction) joinNetworkAction:(id)sender{
-    NSLog(@"Join Button Clicked");
-    //Code to attempt network association
-    // is a network from the list has been selected 
-    if(self.wlantv.selectedRow > -1)
-    {
-        NSError* err = nil;
+       
+   
+               //Get the index value of the item currently selected in the table view
         NSInteger selectedIndex = [self.wlantv selectedRow];
-        NSMutableDictionary* wlanInfo= [wlans objectAtIndex:selectedIndex];
-        NSString* itfname = @"en1";
-        CWInterface* itf = [CWInterface interfaceWithName:itfname];
-        NSLog(@"Current interface obj:%@",[itf interfaceName]);
-        CW8021XProfile* wlanProfile = [CW8021XProfile profile];
-        wlanProfile.ssid = [wlanInfo valueForKey:@"ssid"];
-        NSLog(@" BEgin Network Scan for %@",[wlanInfo valueForKey:@"ssid"]);
-        [itf disassociate];
-        NSSet* networks = [NSSet setWithSet:[itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err]];
-        if(err)
+        
+        //Check for selected Items 
+        if(selectedIndex > -1)
         {
-            NSLog(@"Error: %@",[err localizedDescription]);
-            [NSApp presentError:err];
-        }
-        else{
-            NSLog(@"Number of Networks found: %lu",networks.count);
-            NSLog(@"Network Scan complete");
-            NSMutableDictionary* params =[NSMutableDictionary dictionaryWithCapacity:0];
-            NSLog(@"Attempt Association");
-            if (networks.count > 0){
+            //Create error object
+            NSError* err = nil;
+            NSMutableDictionary* wlanInfo= [wlans objectAtIndex:selectedIndex];
+            
+            NSString* itfname = @"en1";
+            CWInterface* itf = [CWInterface interfaceWithName:itfname];
+            
+            NSLog(@"Current interface obj:%@",[itf interfaceName]);
+            CW8021XProfile* wlanProfile = [CW8021XProfile profile];
+            wlanProfile.ssid = [wlanInfo valueForKey:@"ssid"];
+            
+            NSLog(@" BEgin Network Scan for %@",[wlanInfo valueForKey:@"ssid"]);
+            [itf disassociate];
+            
+            NSSet* networks = [NSSet setWithSet:[itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err]];
+            if(err)
+            {
+                NSLog(@"Error: %@",[err localizedDescription]);
+                [NSApp presentError:err];
+            }
+            else{
+                NSLog(@"Number of Networks found: %lu",networks.count);
+                NSLog(@"Network Scan complete");
+                NSMutableDictionary* params =[NSMutableDictionary dictionaryWithCapacity:0];
+                NSLog(@"Attempt Association");
+                if (networks.count > 0){
                 
-                NSEnumerator* netEnum= [networks objectEnumerator];
-                CWNetwork* net = [netEnum nextObject];
+                    NSEnumerator* netEnum= [networks objectEnumerator];
+                    CWNetwork* net = [netEnum nextObject];
                 
-                [itf associateToNetwork:net password:@"" error:&err];
-                if(err)
-                {
-                    NSLog(@"Error: %@",[err localizedDescription]);
-                    [NSApp presentError:err];
-                }
+                    [itf associateToNetwork:net password:@"" error:&err];
+                    if(err)
+                    {
+                        NSLog(@"Error: %@",[err localizedDescription]);
+                        [NSApp presentError:err];
+                    }
                 
-                else
-                {
-                    NSLog(@"Association Successful");
-                    [serviceBrowser.browser searchForBrowsableDomains];
-                    [serviceBrowser.browser searchForServicesOfType:@"__airport._tcp" inDomain:@"local."];
-                    services  = [NSMutableArray arrayWithArray:serviceBrowser.services];
-                   
-                    NSLog(@"Searched for services");
+                    else
+                    {
+                        NSLog(@"Association Successful");
+                        [serviceBrowser.browser searchForServicesOfType:@"_airport._tcp" inDomain:@""];
+                    
+                    }
                 }
             }
+        }
+    else
+    { 
+        NSAlert *missingSelection = [[NSAlert alloc]init];
+        //Alert user about selecting item in table view
+        [missingSelection addButtonWithTitle:@"OK"];
+        [missingSelection setMessageText:@"Must select a WLan for association"];
+        [missingSelection setInformativeText:@"Must select a WLan for association"];
+        if ([missingSelection runModal] == NSAlertFirstButtonReturn) {
+            
+            
             
         }
+         
     }
 }
 
+
+/****** NSTableView Protocol Messages*******/
 - (NSInteger) numberOfRowsInTableView:(NSTableView *)table {
     return [wlans count];
 }
@@ -257,7 +178,46 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     NSString* identifier = column.identifier;
     [wlan setObject:object forKey:identifier];
 }
+/****** NSTableView Protocol Messages*******/
+ 
+/****** NSNetServiceDelegate Protocol Messages*******/
+-(void) netServiceBrowserWillSearch:(NSNetServiceBrowser *)aNetServiceBrowser
+{
+    NSLog(@"Beginning Service Scan");
+}
 
+-(void) netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)aNetServiceBrowser
+{
+    NSLog(@"Service scan stopped");
+}
+
+-(void) netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didNotSearch:(NSDictionary *)errorDict
+{
+    NSLog(@"Service scan will not occur");
+    NSString* errKey;
+    NSString* errVal;
+    for(NSString* key in errorDict)
+    {
+        errKey = key;
+        errVal = [errorDict valueForKey:key];
+        NSLog(@"Error Key: %@\n Error Value: %@ \n",errKey, errVal);
+    }
+    
+}
+
+-(void)netServiceBrowser:(NSNetServiceBrowser *)aBrowser didFindService:(NSNetService *)aService moreComing:(BOOL)more {
+    [services addObject:aService];
+    NSString* servName = aService.name;
+    NSString* servType = aService.type;
+    NSInteger port = aService.port;
+    NSLog(@"Service Name:%@ \n Service type:%@ \n Service Port:%lu \n",servName,servType,port);
+}
+
+-(void)netServiceBrowser:(NSNetServiceBrowser *)aBrowser didRemoveService:(NSNetService *)aService moreComing:(BOOL)more{
+    [services removeObject:aService];
+    
+}
+/****** NSNetServiceDelegate Protocol Messages*******/
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 
     // Save changes in the application's managed object context before the application terminates.
