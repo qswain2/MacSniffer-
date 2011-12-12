@@ -103,15 +103,15 @@ NSString* const CBTypeIdentifier = @"ServiceType";
             
             NSString* itfname = @"en1";
             CWInterface* itf = [CWInterface interfaceWithName:itfname];
-            
-            NSLog(@"Current interface obj:%@",[itf interfaceName]);
+         
+            NSLog(@"Interface Created");
             CW8021XProfile* wlanProfile = [CW8021XProfile profile];
             wlanProfile.ssid = [wlanInfo valueForKey:@"ssid"];
             
             NSLog(@" BEgin Network Scan for %@",[wlanInfo valueForKey:@"ssid"]);
             [itf disassociate];
-            
-            NSSet* networks = [NSSet setWithSet:[itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err]];
+            NSSet* networks = [NSSet setWithArray:[itf scanForNetworksWithParameters: wlanInfo error:&err]];
+          //  NSSet* networks = [NSSet setWithSet:[itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err]];
             if(err)
             {
                 NSLog(@"Error: %@",[err localizedDescription]);
@@ -127,7 +127,7 @@ NSString* const CBTypeIdentifier = @"ServiceType";
                     NSEnumerator* netEnum= [networks objectEnumerator];
                     CWNetwork* net = [netEnum nextObject];
                 
-                    [itf associateToNetwork:net password:@"" error:&err];
+                    //[itf associateToNetwork:net withParameters:nil error:&err];
                     if(err)
                     {
                         NSLog(@"Error: %@",[err localizedDescription]);

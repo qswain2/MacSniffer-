@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		461C28EA14900E1800551C17 /* CoreWLAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 461C28E914900E1800551C17 /* CoreWLAN.framework */; };
-		461C28ED14900E4B00551C17 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 461C28EC14900E4B00551C17 /* SecurityInterface.framework */; };
 		4644B955148F1C4700354D42 /* MSWLanList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4644B954148F1C4700354D42 /* MSWLanList.m */; };
+		466B53551495B78000DC805F /* IEEE_80211.h in Sources */ = {isa = PBXBuildFile; fileRef = 465EE8901487168E00EC5108 /* IEEE_80211.h */; };
+		466B53601495BE6F00DC805F /* CoreWLAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 461C28E914900E1800551C17 /* CoreWLAN.framework */; };
+		466B53611495BE6F00DC805F /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 461C28EC14900E4B00551C17 /* SecurityInterface.framework */; };
 		468D7EEA1485BA7E00899182 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 467D587B148315D400E1C9D3 /* libpcap.dylib */; };
 		468DF8501479646900284B7F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 468DF84F1479646900284B7F /* main.c */; };
 		468DF8521479646900284B7F /* MacSniffer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 468DF8511479646900284B7F /* MacSniffer.1 */; };
@@ -24,7 +25,6 @@
 		469D831D1484386500C67293 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46555B761482F2CB00B4E526 /* Cocoa.framework */; };
 		469D8332148438D700C67293 /* libpcap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 467D587B148315D400E1C9D3 /* libpcap.dylib */; };
 		469D83351484390900C67293 /* PcapSniffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 469D83341484390900C67293 /* PcapSniffer.m */; };
-		46C7557F147F369F0047C493 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C7557E147F369F0047C493 /* Cocoa.framework */; };
 		46C75581147F37000047C493 /* libobjc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C75580147F37000047C493 /* libobjc.dylib */; };
 /* End PBXBuildFile section */
 
@@ -87,7 +87,6 @@
 		469D8330148438C900C67293 /* libpcap.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcap.A.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libpcap.A.dylib; sourceTree = DEVELOPER_DIR; };
 		469D83331484390900C67293 /* PcapSniffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PcapSniffer.h; path = MacSnifferGUI/PcapSniffer.h; sourceTree = SOURCE_ROOT; };
 		469D83341484390900C67293 /* PcapSniffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PcapSniffer.m; path = MacSnifferGUI/PcapSniffer.m; sourceTree = SOURCE_ROOT; };
-		46C7557E147F369F0047C493 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		46C75580147F37000047C493 /* libobjc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libobjc.dylib; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -98,7 +97,6 @@
 			files = (
 				468D7EEA1485BA7E00899182 /* libpcap.dylib in Frameworks */,
 				46C75581147F37000047C493 /* libobjc.dylib in Frameworks */,
-				46C7557F147F369F0047C493 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,8 +104,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				461C28ED14900E4B00551C17 /* SecurityInterface.framework in Frameworks */,
-				461C28EA14900E1800551C17 /* CoreWLAN.framework in Frameworks */,
+				466B53601495BE6F00DC805F /* CoreWLAN.framework in Frameworks */,
+				466B53611495BE6F00DC805F /* SecurityInterface.framework in Frameworks */,
 				469D83001484386400C67293 /* Cocoa.framework in Frameworks */,
 				469D8332148438D700C67293 /* libpcap.dylib in Frameworks */,
 			);
@@ -172,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				46C75580147F37000047C493 /* libobjc.dylib */,
-				46C7557E147F369F0047C493 /* Cocoa.framework */,
 				468DF8461479641900284B7F /* simplesniffer.c */,
 				468DF84E1479646900284B7F /* MacSniffer */,
 				46555B991482F2CC00B4E526 /* MacSnifferGUITests */,
@@ -368,6 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				466B53551495B78000DC805F /* IEEE_80211.h in Sources */,
 				469D83081484386400C67293 /* main.m in Sources */,
 				469D830F1484386400C67293 /* AppDelegate.m in Sources */,
 				469D83151484386500C67293 /* MacSnifferGUI.xcdatamodeld in Sources */,
@@ -527,7 +525,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -553,7 +551,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
