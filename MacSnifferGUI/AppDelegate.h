@@ -13,6 +13,7 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate>{
     PcapSniffer* ps;
     NSNetServiceBrowser* serviceBrowser;
+    NSArray* lines;
     NSBundle *mainBundle;
     NSString* fileContents;
     IBOutlet NSWindow *window;

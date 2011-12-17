@@ -98,7 +98,7 @@
     if(fileContents != nil)
     {
         //Putting each line in an array
-        NSArray *lines = [fileContents componentsSeparatedByString:@"\n"];
+        lines = [fileContents componentsSeparatedByString:@"\n"];
         
         //Searching throgh each line in the HardwareDB file.
         NSString *temps;
