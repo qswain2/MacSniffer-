@@ -13,12 +13,17 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate>{
     PcapSniffer* ps;
     NSNetServiceBrowser* serviceBrowser;
+    NSBundle *mainBundle;
+    NSString* fileContents;
     IBOutlet NSWindow *window;
+    
+    //join Dialog
     IBOutlet NSWindow *joinDialogWindow;
     IBOutlet NSTextField *userName;
     IBOutlet NSSecureTextField *password;
     IBOutlet NSButton* okButton;
     IBOutlet NSButton* cancelButton;
+    
     
     
     
@@ -29,8 +34,10 @@
  
 @property (retain) IBOutlet NSTableView *wlantv;
 @property (retain) NSMutableArray *services;
+@property (retain) NSMutableArray * fingerprints;
 @property (retain) IBOutlet NSTableView *servicesTV;
 @property (retain) NSMutableArray* wlans;
+@property (retain)IBOutlet NSTableView* fingerprintTV;
 @property (readwrite,retain) NSNetServiceBrowser* serviceBrowser;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -48,6 +55,6 @@
             forTableColumn: (NSTableColumn *)column
               row: (NSInteger)row;
                                                                    
-
+-(NSString*)fingerprintRouter:(NSString*) wlan;
 
 @end

@@ -13,10 +13,8 @@
 #import "CoreWLAN/CWInterface.h"
 #import "MSServiceBrowser.m"
 
-NSString* const CBSSIDIdentifier = @"ssid";
-NSString* const CBBSSIDIdentifier =@"bssid";
-NSString* const CBServiceIdentifier = @"ServiceName";
-NSString* const CBTypeIdentifier = @"ServiceType";
+
+
 @implementation AppDelegate
 
 
@@ -24,10 +22,11 @@ NSString* const CBTypeIdentifier = @"ServiceType";
 
 @synthesize wlans;
 @synthesize services;
+@synthesize fingerprints;
 @synthesize serviceBrowser;
 @synthesize wlantv= _wlantv;
 @synthesize servicesTV = _servicesTV;
-
+@synthesize fingerprintTV = _fingerprintTV;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize managedObjectContext = __managedObjectContext;
@@ -37,6 +36,18 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     ps = [PcapSniffer pcapSniffer];
     serviceBrowser = [[NSNetServiceBrowser alloc] init];
     [serviceBrowser setDelegate:self];
+    fingerprints = [NSMutableArray array];
+    services = [NSMutableArray array];
+    mainBundle = [NSBundle mainBundle];
+    NSString* filePath = [mainBundle pathForResource:@"HardwareDB" ofType:@"txt"];
+    
+    NSStringEncoding encoding;
+    NSError *error;
+    
+    fileContents = [[NSString alloc] initWithContentsOfFile: filePath
+                                                         usedEncoding:&encoding 
+                                                                error:&error ];
+   
     
 }
 
@@ -62,6 +73,58 @@ NSString* const CBTypeIdentifier = @"ServiceType";
         [[NSApplication sharedApplication] presentError:error];
     }
 }
+/************** Hardware Finger Print***************/
+-(NSString*) fingerprintRouter:(NSString*) BSSID{
+    
+    NSString *vendor;
+    NSString *macaddress;
+    
+
+    //Clean up the original MAC Address. I only need the first 6 digits
+    if ( [BSSID length] > 16 )
+    {
+        macaddress = [BSSID substringToIndex:[BSSID length] - 9];
+    }
+
+
+    NSRange range = NSMakeRange(2,1);
+    NSString *clean1 = [macaddress stringByReplacingCharactersInRange:range withString:@""];
+
+    NSRange range2 = NSMakeRange(4,1);
+    NSString *cleanedmac = [clean1 stringByReplacingCharactersInRange:range2 withString:@""];
+    
+    if(fileContents != nil)
+    {
+        //Putting each line in an array
+        NSArray *lines = [fileContents componentsSeparatedByString:@"\n"];
+        
+        //Searching throgh each line in the HardwareDB file.
+        NSString *temps;
+        
+        for (NSString *s in lines) {
+            temps = s;
+            
+            if([temps hasPrefix:cleanedmac])
+            {
+                //Chopping off the MAC address to show the only the vendor
+                vendor = [temps substringFromIndex:7];
+            }
+            
+            
+        }
+        
+    }
+   
+    
+    if(vendor == nil)
+    {
+        vendor = @"Hardware Vendor Not Found in Database!";
+    }
+    
+    
+    return vendor;
+}
+/**************************************************/
 -(IBAction) scanAction:(id) sender{
     
 
@@ -86,9 +149,23 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     //Update the outlet to point at the detectedSet Object
     NSSet* detectedSet = [NSSet setWithArray:ps.wlanList.wlanArray];
     wlans = [[detectedSet allObjects] mutableCopy];
-   
+    NSEnumerator* e = [wlans objectEnumerator];
+    id obj = [e nextObject];
+    while(obj != nil)
+    {
+        NSDictionary* dict = obj;
+        NSString* bssid = [dict objectForKey:@"bssid"];
+        NSString* vendorID = [self fingerprintRouter:bssid];
+        NSMutableDictionary* fpDict = [NSMutableDictionary dictionary];
+        [fpDict setObject:bssid forKey:@"macAddr"];
+        [fpDict setObject:vendorID forKey:@"vendor"];
+        [fingerprints addObject: fpDict];
+        NSLog(@"THe BSSID is: %@ and the Vendor is: %@",bssid,vendorID);
+        obj = [e nextObject];
+    }
     //message the tableview to update itself;
     [self.wlantv reloadData];
+    [self.fingerprintTV reloadData];
 }
 
 //Action for getting interface and associating to a selected network using CoreWirelessLan Framework
@@ -245,6 +322,11 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     {
         return [services count];
     }
+    if(table == self.fingerprintTV)
+    {
+        return [wlans count];
+    }
+    return 0;
 }
 -(id) tableView: (NSTableView *)table objectValueForTableColumn: (NSTableColumn *)column
             row: (NSInteger)row{
@@ -258,6 +340,12 @@ NSString* const CBTypeIdentifier = @"ServiceType";
         NSDictionary* serv = [[self services] objectAtIndex: row];
         NSString* identifier = column.identifier;
         return [serv objectForKey:identifier]; 
+    }
+    if(table == self.fingerprintTV)
+    {
+        NSDictionary* fp = [[self fingerprints] objectAtIndex:row];
+        NSString* identifier = column.identifier;
+        return [fp objectForKey:identifier];
     }
     return nil;
 }
@@ -275,7 +363,13 @@ NSString* const CBTypeIdentifier = @"ServiceType";
         NSMutableDictionary* service = [self.services objectAtIndex:row];
         NSString* identifier = column.identifier;
         [service setObject:object forKey:identifier];
-        [self.servicesTV reloadData];
+        
+    }
+    if(table == self.fingerprintTV)
+    {
+        NSMutableDictionary* fingerprint = [self.wlans objectAtIndex:row];
+        NSString* identifier = column.identifier;
+        [fingerprint setObject:object forKey:identifier];
     }
 }
 /****** NSTableView Protocol Messages*******/
@@ -312,10 +406,11 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     NSInteger port = aService.port;
     NSLog(@"Service Name:%@ \n Service type:%@ \n Service Port:%lu \n",servName,servType,port);
     NSMutableDictionary* serv = [NSMutableDictionary dictionary];
-    [serv setObject:servName forKey:@"ServiceName"];
-    [serv setObject:servType forKey:@"ServiceType"];
+    [serv setObject:servName forKey:@"serviceName"];
+    [serv setObject:servType forKey:@"serviceType"];
     [services addObject:serv];
     
+    [self.servicesTV reloadData];
     
 }
 
