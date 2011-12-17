@@ -164,19 +164,19 @@ NSString* const CBTypeIdentifier = @"ServiceType";
                         //No User name needed for WPA2 Personal
                         [userName setEnabled:FALSE];
                         [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
-                           didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];
+                           didEndSelector:nil contextInfo:nil];
                     }
                     
                     if([net supportsSecurity:kCWSecurityWPAEnterprise]){
                             NSLog(@"WPA Enterprise");
                         [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
-                           didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];
+                           didEndSelector:nil contextInfo:nil];
                     }
                     if([net supportsSecurity:kCWSecurityWPA2Enterprise]){
                         
                     NSLog(@"WPA2 Enterprise");
                     [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
-                        didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];   
+                        didEndSelector:nil contextInfo:nil];   
                     }
                 if([net supportsSecurity:kCWSecurityNone])
                 {
@@ -213,7 +213,7 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     {
         NSLog(@"Error: %@",[err localizedDescription]);
         [NSApp presentError:err];
-        [NSApp endSheet:joinDialogWindow];
+        [NSApp stopModal];
         [joinDialogWindow orderOut:sender];
     }
     
@@ -221,7 +221,8 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     {
         NSLog(@"Association Successful");
         [serviceBrowser searchForServicesOfType:@"_airport._tcp" inDomain:@""];
-        [NSApp endSheet:joinDialogWindow];
+        [NSApp stopModal];
+        //[NSApp endSheet:joinDialogWindow];
         [joinDialogWindow orderOut:sender]; 
     }
     
@@ -258,6 +259,7 @@ NSString* const CBTypeIdentifier = @"ServiceType";
         NSString* identifier = column.identifier;
         return [serv objectForKey:identifier]; 
     }
+    return nil;
 }
 -(void) tableView: (NSTableView *)table
    setObjectValue: (id)object
@@ -273,6 +275,7 @@ NSString* const CBTypeIdentifier = @"ServiceType";
         NSMutableDictionary* service = [self.services objectAtIndex:row];
         NSString* identifier = column.identifier;
         [service setObject:object forKey:identifier];
+        [self.servicesTV reloadData];
     }
 }
 /****** NSTableView Protocol Messages*******/
@@ -312,7 +315,7 @@ NSString* const CBTypeIdentifier = @"ServiceType";
     [serv setObject:servName forKey:@"ServiceName"];
     [serv setObject:servType forKey:@"ServiceType"];
     [services addObject:serv];
-    [self.servicesTV reloadData];
+    
     
 }
 
