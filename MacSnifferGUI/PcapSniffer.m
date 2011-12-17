@@ -111,7 +111,7 @@
 }
 
 -(void) pc_dispatch{
-    // declare process packet.
+    
     if(pcap_dispatch(handle, 0, processPacket,(__bridge void*) wlanList)!=0)
        {
            pcap_geterr(handle);

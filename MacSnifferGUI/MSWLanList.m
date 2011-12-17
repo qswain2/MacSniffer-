@@ -25,17 +25,11 @@
 }
 
 -(void) insertWlanBSSID:(NSString *)bssid intoDict:(NSMutableDictionary*) dc {
-    //set the ssid as the value and the bssid as the key
-    //accounts for APs that are part of an ESS
-    //[wlanDict setObject:bssid forKey:@"bssid"];
-   // [wlanDict setObject:ssid forKey:@"ssid"];
     
     [dc setObject:bssid forKey:@"bssid"];
-   
-    
-    //[wlanDict objectsForKeys:[wlanDict allKeys] notFoundMarker:err]];
 }
--(void) insertWlanSSID:(NSString*) name             intoDict:(NSMutableDictionary*) dc
+
+-(void) insertWlanSSID:(NSString*) name intoDict:(NSMutableDictionary*) dc
 {
      [dc setObject:name forKey:@"ssid"];
 }

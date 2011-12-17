@@ -11,14 +11,11 @@
 #import "PcapSniffer.m"
 #import "CoreWLAN/CoreWLAN.h"
 #import "CoreWLAN/CWInterface.h"
-#import "MSServiceBrowser.m"
+
 
 
 
 @implementation AppDelegate
-
-
-
 
 @synthesize wlans;
 @synthesize services;
@@ -230,7 +227,7 @@
                 //Find supported Security type and disable fields uneccessary for authentication
                 if ([net supportsSecurity:kCWSecurityWEP])
                 {
-                    NSLog(@"WEP");
+                    
                     // No user name needed for WEP Auth
                     [userName setEnabled:FALSE];
                     [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
@@ -238,14 +235,13 @@
                     }
                 
                     if([net supportsSecurity:kCWSecurityWPAPersonal]){
-                        NSLog(@"WPA PSK");
+                       
                         // No User name needed for WPA PSK
                         [userName setEnabled:FALSE];
                         [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
                            didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];
                     }
                     if([net supportsSecurity:kCWSecurityWPA2Personal]){
-                        NSLog(@"WPA2 ");
                         //No User name needed for WPA2 Personal
                         [userName setEnabled:FALSE];
                         [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
@@ -253,19 +249,19 @@
                     }
                     
                     if([net supportsSecurity:kCWSecurityWPAEnterprise]){
-                            NSLog(@"WPA Enterprise");
+                        
                         [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
                            didEndSelector:nil contextInfo:nil];
                     }
                     if([net supportsSecurity:kCWSecurityWPA2Enterprise]){
                         
-                    NSLog(@"WPA2 Enterprise");
+                  
                     [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
                         didEndSelector:nil contextInfo:nil];   
                     }
                 if([net supportsSecurity:kCWSecurityNone])
                 {
-                    NSLog(@"Open");
+                  
                     [userName setEditable:FALSE];
                     [password setEditable:FALSE];
                     [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self

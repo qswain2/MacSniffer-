@@ -54,8 +54,6 @@
 /* Begin PBXFileReference section */
 		461C28E914900E1800551C17 /* CoreWLAN.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreWLAN.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/CoreWLAN.framework; sourceTree = DEVELOPER_DIR; };
 		461C28EC14900E4B00551C17 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/SecurityInterface.framework; sourceTree = DEVELOPER_DIR; };
-		46305A531493221E00825389 /* MSServiceBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSServiceBrowser.h; sourceTree = "<group>"; };
-		46305A541493221E00825389 /* MSServiceBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSServiceBrowser.m; sourceTree = "<group>"; };
 		4644B953148F1C4700354D42 /* MSWLanList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSWLanList.h; sourceTree = "<group>"; };
 		4644B954148F1C4700354D42 /* MSWLanList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSWLanList.m; sourceTree = "<group>"; };
 		46555B761482F2CB00B4E526 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -201,8 +199,6 @@
 		469D83011484386400C67293 /* MacSnifferGUI */ = {
 			isa = PBXGroup;
 			children = (
-				46305A531493221E00825389 /* MSServiceBrowser.h */,
-				46305A541493221E00825389 /* MSServiceBrowser.m */,
 				469D830D1484386400C67293 /* AppDelegate.h */,
 				4644B953148F1C4700354D42 /* MSWLanList.h */,
 				4644B954148F1C4700354D42 /* MSWLanList.m */,
