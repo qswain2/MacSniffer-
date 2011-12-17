@@ -33,17 +33,22 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    // Initialize Sniffer, ServiceBrowser
     ps = [PcapSniffer pcapSniffer];
     serviceBrowser = [[NSNetServiceBrowser alloc] init];
+    
+    // Set delegate for service browser to app delegate
     [serviceBrowser setDelegate:self];
+    
+    // Initialize arrays for table views;
     fingerprints = [NSMutableArray array];
     services = [NSMutableArray array];
+    
+    //INitialize mainBundle annd create components needed for fingerprinting
     mainBundle = [NSBundle mainBundle];
     NSString* filePath = [mainBundle pathForResource:@"HardwareDB" ofType:@"txt"];
-    
     NSStringEncoding encoding;
     NSError *error;
-    
     fileContents = [[NSString alloc] initWithContentsOfFile: filePath
                                                          usedEncoding:&encoding 
                                                                 error:&error ];
@@ -207,6 +212,7 @@
                 NSLog(@"Error: %@",[err localizedDescription]);
                 [NSApp presentError:err];
             }
+        
         else{
             
             NSLog(@"Number of Networks found: %lu",networks.count);
@@ -218,8 +224,7 @@
                 NSEnumerator* netEnum= [networks objectEnumerator];
                 CWNetwork* net = [netEnum nextObject];
                    
-                //Find supported Security type 
-                        
+                //Find supported Security type and disable fields uneccessary for authentication
                 if ([net supportsSecurity:kCWSecurityWEP])
                 {
                     NSLog(@"WEP");
@@ -263,23 +268,39 @@
                     [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
                        didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];
                 }
-                }   
-        }
+        }   
+    }
     
 }
 
+// The ok button ins the join modal window is clicked to authenticate and connect to a wlan to be scanned
 -(IBAction) joinOkClicked:(id)sender{
+    
     NSString* itfname = @"en1";
     NSError* err = nil;
+    // Create another interface object 
     CWInterface* itf = [CWInterface interfaceWithName:itfname];
     NSMutableDictionary* wlan = [wlans objectAtIndex:[self.wlantv selectedRow]];
+    
+    //Return a set of networks found by scanning for a network withthe specific SSID
     NSSet* nets = [itf scanForNetworksWithName:[wlan valueForKey:@"ssid"] error:&err];
+    
+    //Create an enumerator and get the next network object
     NSEnumerator* e = [nets objectEnumerator]; 
     CWNetwork* net = [e nextObject];
-     if(!(([net supportsSecurity:kCWSecurityWPAEnterprise]) && ([net supportsSecurity:kCWSecurityWPA2Enterprise]))){
+    
+    // If open authentication then authenticate with no password
+    if([net supportsSecurity:kCWSecurityNone] || [net supportsSecurity:kCWSecurityModeOpen])
+    {
+        [itf associateToNetwork:net password:@"" error:&err];
+
+    }
+    
+      // If the network is either WEP, WPA PSK, or WPA2 PSK obtain the password and authenticate to network
+    if(!(([net supportsSecurity:kCWSecurityWPAEnterprise]) && ([net supportsSecurity:kCWSecurityWPA2Enterprise]))){
          [itf associateToNetwork:net password:[password stringValue] error:&err];
      }
-    else
+    else 
     {
         /* Method to authenticate to wpa enterprise network. 
         [itf associateToEnterpriseNetwork:net identity:<#(SecIdentityRef)#> username:[userName stringValue] password:[password stringValue] error:&err];
@@ -287,7 +308,8 @@
     }
     
     if(err)
-    {
+    {   
+        //Present Error to user if one occurs 
         NSLog(@"Error: %@",[err localizedDescription]);
         [NSApp presentError:err];
         [NSApp stopModal];
@@ -296,8 +318,9 @@
     
     else
     {
-        NSLog(@"Association Successful");
+        //Association Successful begin scanning for the airport service used By Airport Routers and Time Machines
         [serviceBrowser searchForServicesOfType:@"_airport._tcp" inDomain:@""];
+        //Dismiss the authentication Modal WIndow
         [NSApp stopModal];
         //[NSApp endSheet:joinDialogWindow];
         [joinDialogWindow orderOut:sender]; 
@@ -328,6 +351,7 @@
     }
     return 0;
 }
+
 -(id) tableView: (NSTableView *)table objectValueForTableColumn: (NSTableColumn *)column
             row: (NSInteger)row{
     if(table == self.wlantv){

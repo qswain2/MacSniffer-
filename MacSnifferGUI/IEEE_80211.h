@@ -140,6 +140,10 @@ NSString* readBSSID(u_char* addr){
     }while(--z>0);
     NSLog(@"%@",bssid);
     printf("\n");
+    if ([bssid isEqualToString:@"FF:FF:FF:FF:FF:FF"] || [bssid isEqualToString:@"00:00:00:00:00:00"])
+    {
+        bssid = nil;
+    }
       
     return bssid;
     
