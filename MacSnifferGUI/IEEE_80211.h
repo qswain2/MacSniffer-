@@ -138,6 +138,7 @@ NSString* readBSSID(u_char* addr){
        temp= [NSString stringWithFormat:@"%s%02X",((z==6)?" ":":"),*addr++];
        bssid = [bssid stringByAppendingString:temp];
     }while(--z>0);
+    NSLog(@"%@",bssid);
     printf("\n");
       
     return bssid;
@@ -147,11 +148,15 @@ NSString* readBSSID(u_char* addr){
 //Read the SSID length and extracts the SSID value from the SSID
 // struct
 NSString* readSSID(struct wi_ssid pkt_ssid ){
-    
-    if(pkt_ssid.length != 0)
+    if(pkt_ssid.length == 0)
+    {
+         NSMutableString* wlanID=[NSMutableString stringWithString:@"Wildcard SSID"];
+        return wlanID;
+    }
+    if(pkt_ssid.length > 0)
     {
         NSMutableString* wlanID=[NSMutableString stringWithString:@""];
-        NSMutableString* temp = nil;
+        NSMutableString*temp = nil;
         for(int i =0; i < pkt_ssid.length;i++)
         {
             temp =[NSString stringWithFormat:@"%c",(char)pkt_ssid.SSID[i]];
@@ -165,8 +170,14 @@ NSString* readSSID(struct wi_ssid pkt_ssid ){
         {
             ssidName[i] = pkt_ssid.SSID[i];
         }
+        NSString* compare = [NSString stringWithUTF8String:ssidName];
         
+        if ( compare==nil || compare==@"")
+            {
+                return nil;
+            }
         NSLog(@"SSID is %@",wlanID);
+        NSLog(@"Compared to %@",compare);
         return wlanID; 
         
     }
@@ -179,7 +190,8 @@ void processPacket(void *arg, const struct pcap_pkthdr* pkthdr, const u_char* pa
     int tp,stp;
     MSWLanList* dict = (__bridge MSWLanList*)arg;
     struct ieee80211_radiotap_header *rh =(struct ieee80211_radiotap_header *)packet;
-    struct wi_frame *fr= (struct wi_frame *)(packet + rh->it_len);
+    struct wi_frame *fr= NULL;
+    fr =(struct wi_frame *)(packet + rh->it_len);
     // String objects for the information we want to extract from
     //packet scanning
     NSString* name;
@@ -209,7 +221,7 @@ void processPacket(void *arg, const struct pcap_pkthdr* pkthdr, const u_char* pa
                 }
                 break;
                 
-            case ASSOC_RESP:
+                case ASSOC_RESP:
                 printf("Association Response \n");
                 break;
             case REASSOC_REQUEST:
@@ -224,7 +236,7 @@ void processPacket(void *arg, const struct pcap_pkthdr* pkthdr, const u_char* pa
                 }
                 break;
             case REASSOC_RESP:
-                printf("Reassociation Response \n");
+               // printf("Reassociation Response \n");
                 break;   
             case PROBE_REQUEST:
                 printf("Probe Request \n");
@@ -241,16 +253,16 @@ void processPacket(void *arg, const struct pcap_pkthdr* pkthdr, const u_char* pa
             case PROBE_RESP:
                 printf("Probe Resonse \n");
                 break;
-            case BEACON:
+             case BEACON:
                 printf("Beacon Frame \n");
                 struct beacon_frame *bf = (struct beacon_frame* )fr;
                 name = readSSID(bf->ssid);
                 bssid = readBSSID(bf->bssid);
-                if((name != nil) &&(bssid !=nil))
+                if((name != nil) && (bssid !=nil))
                 {
                     [dict insertWlanEntry:bssid name:name];
                 }
-                /* Original code for printing out the mac addresses moved into function readBSSID
+                // Original code for printing out the mac addresses moved into function readBSSID
                 int z = 6;
                    
                 ptr = bf->da;
@@ -275,15 +287,18 @@ void processPacket(void *arg, const struct pcap_pkthdr* pkthdr, const u_char* pa
                     printf("%s%02X",(z==6)?" ":":",*ptr++);
                 }while(--z>0);
                 printf("\n");
-                */
+                
                 break; 
+                
             default:
                 printf("Can't read subtype \n");
                 
             
         }
                 
-             
+        name = nil;
+        ptr = nil;
+        bssid =nil;
                
         
     }

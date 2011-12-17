@@ -134,7 +134,7 @@
         NSString* devName = @"en1";
         [self setDevice:devName]; 
         [self setPromiscuousMode:1];
-        [self setTimeout:10000];
+        [self setTimeout:20000];
         [self setMonitorMode:1];
         MSWLanList* newlist =[MSWLanList msWlanList];
         [self setWlanList:newlist];

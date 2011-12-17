@@ -20,10 +20,13 @@ NSString* const CBTypeIdentifier = @"ServiceType";
 @implementation AppDelegate
 
 
-@synthesize window = _window;
-@synthesize wlantv= _wlantv;
+
+
 @synthesize wlans;
 @synthesize services;
+@synthesize serviceBrowser;
+@synthesize wlantv= _wlantv;
+@synthesize servicesTV = _servicesTV;
 
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize managedObjectModel = __managedObjectModel;
@@ -32,7 +35,8 @@ NSString* const CBTypeIdentifier = @"ServiceType";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     ps = [PcapSniffer pcapSniffer];
-    serviceBrowser = [MSServiceBrowser new];
+    serviceBrowser = [[NSNetServiceBrowser alloc] init];
+    [serviceBrowser setDelegate:self];
     
 }
 
@@ -88,95 +92,188 @@ NSString* const CBTypeIdentifier = @"ServiceType";
 }
 
 //Action for getting interface and associating to a selected network using CoreWirelessLan Framework
+
+/***************** Join Dialog Actions *****/
 -(IBAction) joinNetworkAction:(id)sender{
        
    
-               //Get the index value of the item currently selected in the table view
-        NSInteger selectedIndex = [self.wlantv selectedRow];
+    //Get the index value of the item currently selected in the table view
+    NSInteger selectedIndex = [self.wlantv selectedRow];
         
-        //Check for selected Items 
-        if(selectedIndex > -1)
-        {
-            //Create error object
-            NSError* err = nil;
-            NSMutableDictionary* wlanInfo= [wlans objectAtIndex:selectedIndex];
-            
-            NSString* itfname = @"en1";
-            CWInterface* itf = [CWInterface interfaceWithName:itfname];
-         
-            NSLog(@"Interface Created");
-            CW8021XProfile* wlanProfile = [CW8021XProfile profile];
-            wlanProfile.ssid = [wlanInfo valueForKey:@"ssid"];
-            
-            NSLog(@" BEgin Network Scan for %@",[wlanInfo valueForKey:@"ssid"]);
-            [itf disassociate];
-            NSSet* networks = [NSSet setWithArray:[itf scanForNetworksWithParameters: wlanInfo error:&err]];
-          //  NSSet* networks = [NSSet setWithSet:[itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err]];
-            if(err)
-            {
-                NSLog(@"Error: %@",[err localizedDescription]);
-                [NSApp presentError:err];
-            }
-            else{
-                NSLog(@"Number of Networks found: %lu",networks.count);
-                NSLog(@"Network Scan complete");
-                NSMutableDictionary* params =[NSMutableDictionary dictionaryWithCapacity:0];
-                NSLog(@"Attempt Association");
-                if (networks.count > 0){
-                
-                    NSEnumerator* netEnum= [networks objectEnumerator];
-                    CWNetwork* net = [netEnum nextObject];
-                
-                    //[itf associateToNetwork:net withParameters:nil error:&err];
-                    if(err)
-                    {
-                        NSLog(@"Error: %@",[err localizedDescription]);
-                        [NSApp presentError:err];
-                    }
-                
-                    else
-                    {
-                        NSLog(@"Association Successful");
-                        [serviceBrowser.browser searchForServicesOfType:@"_airport._tcp" inDomain:@""];
-                    
-                    }
-                }
-            }
-        }
-    else
-    { 
+    //Check for selected Items 
+    if(selectedIndex <= -1)
+    {
         NSAlert *missingSelection = [[NSAlert alloc]init];
         //Alert user about selecting item in table view
         [missingSelection addButtonWithTitle:@"OK"];
         [missingSelection setMessageText:@"Must select a WLan for association"];
         [missingSelection setInformativeText:@"Must select a WLan for association"];
-        if ([missingSelection runModal] == NSAlertFirstButtonReturn) {
-            
-            
-            
-        }
-         
+        return;
     }
+        //Create error object
+        NSError* err = nil;
+        NSMutableDictionary* wlanInfo= [wlans objectAtIndex:selectedIndex];
+        // Default wireless interface
+        NSString* itfname = @"en1";
+        CWInterface* itf = [CWInterface interfaceWithName:itfname];
+         
+        NSLog(@"Interface Created");
+        
+        //Ensure that interface is not assoicated to any network
+        [itf disassociate];
+        
+        //Scan for a particular network
+        NSSet* networks = [NSSet setWithSet:[itf scanForNetworksWithName:[wlanInfo valueForKey:@"ssid"] error:&err]];
+        // If an error occurs report it 
+        if(err)
+            {
+                NSLog(@"Error: %@",[err localizedDescription]);
+                [NSApp presentError:err];
+            }
+        else{
+            
+            NSLog(@"Number of Networks found: %lu",networks.count);
+            NSLog(@"Network Scan complete");
+    
+            NSLog(@"Attempt Association");
+            if (networks.count > 0){
+                
+                NSEnumerator* netEnum= [networks objectEnumerator];
+                CWNetwork* net = [netEnum nextObject];
+                   
+                //Find supported Security type 
+                        
+                if ([net supportsSecurity:kCWSecurityWEP])
+                {
+                    NSLog(@"WEP");
+                    // No user name needed for WEP Auth
+                    [userName setEnabled:FALSE];
+                    [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
+                       didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];
+                    }
+                
+                    if([net supportsSecurity:kCWSecurityWPAPersonal]){
+                        NSLog(@"WPA PSK");
+                        // No User name needed for WPA PSK
+                        [userName setEnabled:FALSE];
+                        [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
+                           didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];
+                    }
+                    if([net supportsSecurity:kCWSecurityWPA2Personal]){
+                        NSLog(@"WPA2 ");
+                        //No User name needed for WPA2 Personal
+                        [userName setEnabled:FALSE];
+                        [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
+                           didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];
+                    }
+                    
+                    if([net supportsSecurity:kCWSecurityWPAEnterprise]){
+                            NSLog(@"WPA Enterprise");
+                        [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
+                           didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];
+                    }
+                    if([net supportsSecurity:kCWSecurityWPA2Enterprise]){
+                        
+                    NSLog(@"WPA2 Enterprise");
+                    [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
+                        didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];   
+                    }
+                if([net supportsSecurity:kCWSecurityNone])
+                {
+                    NSLog(@"Open");
+                    [userName setEditable:FALSE];
+                    [password setEditable:FALSE];
+                    [NSApp beginSheet:joinDialogWindow modalForWindow:window modalDelegate:self
+                       didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)contextInfo:nil];
+                }
+                }   
+        }
+    
 }
+
+-(IBAction) joinOkClicked:(id)sender{
+    NSString* itfname = @"en1";
+    NSError* err = nil;
+    CWInterface* itf = [CWInterface interfaceWithName:itfname];
+    NSMutableDictionary* wlan = [wlans objectAtIndex:[self.wlantv selectedRow]];
+    NSSet* nets = [itf scanForNetworksWithName:[wlan valueForKey:@"ssid"] error:&err];
+    NSEnumerator* e = [nets objectEnumerator]; 
+    CWNetwork* net = [e nextObject];
+     if(!(([net supportsSecurity:kCWSecurityWPAEnterprise]) && ([net supportsSecurity:kCWSecurityWPA2Enterprise]))){
+         [itf associateToNetwork:net password:[password stringValue] error:&err];
+     }
+    else
+    {
+        /* Method to authenticate to wpa enterprise network. 
+        [itf associateToEnterpriseNetwork:net identity:<#(SecIdentityRef)#> username:[userName stringValue] password:[password stringValue] error:&err];
+         */
+    }
+    
+    if(err)
+    {
+        NSLog(@"Error: %@",[err localizedDescription]);
+        [NSApp presentError:err];
+        [NSApp endSheet:joinDialogWindow];
+        [joinDialogWindow orderOut:sender];
+    }
+    
+    else
+    {
+        NSLog(@"Association Successful");
+        [serviceBrowser searchForServicesOfType:@"_airport._tcp" inDomain:@""];
+        [NSApp endSheet:joinDialogWindow];
+        [joinDialogWindow orderOut:sender]; 
+    }
+    
+}
+-(IBAction)joinCancelClicked:(id)sender{
+    [NSApp endSheet:joinDialogWindow];
+    [joinDialogWindow orderOut:sender];
+}
+/****************** Join Dialog Actions****/
 
 
 /****** NSTableView Protocol Messages*******/
 - (NSInteger) numberOfRowsInTableView:(NSTableView *)table {
-    return [wlans count];
+    if(table == self.wlantv)
+    {
+        return [wlans count];
+    }
+    
+    if(table == self.servicesTV)
+    {
+        return [services count];
+    }
 }
 -(id) tableView: (NSTableView *)table objectValueForTableColumn: (NSTableColumn *)column
             row: (NSInteger)row{
+    if(table == self.wlantv){
     NSDictionary* wlan = [[self wlans] objectAtIndex: row];
     NSString* identifier = column.identifier;
     return [wlan objectForKey:identifier];
+    }
+    if(table == self.servicesTV)
+    {
+        NSDictionary* serv = [[self services] objectAtIndex: row];
+        NSString* identifier = column.identifier;
+        return [serv objectForKey:identifier]; 
+    }
 }
 -(void) tableView: (NSTableView *)table
    setObjectValue: (id)object
    forTableColumn: (NSTableColumn *)column
               row: (NSInteger)row;{
+    if(table == self.wlantv){
     NSMutableDictionary* wlan = [self.wlans objectAtIndex:row];
     NSString* identifier = column.identifier;
     [wlan setObject:object forKey:identifier];
+    }
+    if(table == self.servicesTV)
+    {
+        NSMutableDictionary* service = [self.services objectAtIndex:row];
+        NSString* identifier = column.identifier;
+        [service setObject:object forKey:identifier];
+    }
 }
 /****** NSTableView Protocol Messages*******/
  
@@ -206,11 +303,17 @@ NSString* const CBTypeIdentifier = @"ServiceType";
 }
 
 -(void)netServiceBrowser:(NSNetServiceBrowser *)aBrowser didFindService:(NSNetService *)aService moreComing:(BOOL)more {
-    [services addObject:aService];
+    
     NSString* servName = aService.name;
     NSString* servType = aService.type;
     NSInteger port = aService.port;
     NSLog(@"Service Name:%@ \n Service type:%@ \n Service Port:%lu \n",servName,servType,port);
+    NSMutableDictionary* serv = [NSMutableDictionary dictionary];
+    [serv setObject:servName forKey:@"ServiceName"];
+    [serv setObject:servType forKey:@"ServiceType"];
+    [services addObject:serv];
+    [self.servicesTV reloadData];
+    
 }
 
 -(void)netServiceBrowser:(NSNetServiceBrowser *)aBrowser didRemoveService:(NSNetService *)aService moreComing:(BOOL)more{
@@ -220,47 +323,7 @@ NSString* const CBTypeIdentifier = @"ServiceType";
 /****** NSNetServiceDelegate Protocol Messages*******/
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 
-    // Save changes in the application's managed object context before the application terminates.
-
-    if (!__managedObjectContext) {
-        return NSTerminateNow;
-    }
-
-    if (![[self managedObjectContext] commitEditing]) {
-        NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
-        return NSTerminateCancel;
-    }
-
-    if (![[self managedObjectContext] hasChanges]) {
-        return NSTerminateNow;
-    }
-
-    NSError *error = nil;
-    if (![[self managedObjectContext] save:&error]) {
-
-        // Customize this code block to include application-specific recovery steps.              
-        BOOL result = [sender presentError:error];
-        if (result) {
-            return NSTerminateCancel;
-        }
-
-        NSString *question = NSLocalizedString(@"Could not save changes while quitting. Quit anyway?", @"Quit without saves error question message");
-        NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
-        NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
-        NSString *cancelButton = NSLocalizedString(@"Cancel", @"Cancel button title");
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:question];
-        [alert setInformativeText:info];
-        [alert addButtonWithTitle:quitButton];
-        [alert addButtonWithTitle:cancelButton];
-
-        NSInteger answer = [alert runModal];
-        
-        if (answer == NSAlertAlternateReturn) {
-            return NSTerminateCancel;
-        }
-    }
-
+  
     return NSTerminateNow;
 }
 
