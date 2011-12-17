@@ -130,6 +130,8 @@
     return vendor;
 }
 /**************************************************/
+
+/*****************Scan Action *********************/
 -(IBAction) scanAction:(id) sender{
     
 
@@ -173,6 +175,7 @@
     [self.fingerprintTV reloadData];
 }
 
+/******************* End Scan Action *******/
 //Action for getting interface and associating to a selected network using CoreWirelessLan Framework
 
 /***************** Join Dialog Actions *****/
