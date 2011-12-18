@@ -167,6 +167,7 @@
         NSLog(@"THe BSSID is: %@ and the Vendor is: %@",bssid,vendorID);
         obj = [e nextObject];
     }
+    
     //message the tableview to update itself;
     [self.wlantv reloadData];
     [self.fingerprintTV reloadData];
